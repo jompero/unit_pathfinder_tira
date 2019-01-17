@@ -23,3 +23,9 @@ Shortest path found (both algorithms are expected to return the same path)
 Benchmarking results
 Time
 Vertices enqueued
+
+## Sources
+ https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+ https://en.wikipedia.org/wiki/A%2A_search_algorithm
+ http://bigoref.com/
+ https://www.movingai.com/benchmarks/mapf.html
