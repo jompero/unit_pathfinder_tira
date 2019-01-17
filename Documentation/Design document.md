@@ -15,14 +15,14 @@ Space Complexity for both algorithms is O(|V|) as visited vertices need to be st
 
 ## Input / Output
 ### Input
-Map (Nathan Sturtevant, Moving AI Labs Warcraft III 2D maps are to be used)
-Starting coordination
-Destination coordination
+* Map (Nathan Sturtevant, Moving AI Labs Warcraft III 2D maps are to be used)
+* Starting coordination
+* Destination coordination
 ### Ouput
-Shortest path found (both algorithms are expected to return the same path)
-Benchmarking results
-Time
-Vertices enqueued
+* Shortest path found (both algorithms are expected to return the same path)
+* Benchmarking results
+* Time
+* Vertices enqueued
 
 ## Sources
  https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
