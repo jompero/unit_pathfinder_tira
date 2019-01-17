@@ -25,7 +25,7 @@ Space Complexity for both algorithms is O(|V|) as visited vertices need to be st
 * Vertices enqueued
 
 ## Sources
- l. https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
- l. https://en.wikipedia.org/wiki/A%2A_search_algorithm
- l. http://bigoref.com/
- l. https://www.movingai.com/benchmarks/mapf.html
+ 1. https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+ 1. https://en.wikipedia.org/wiki/A%2A_search_algorithm
+ 1. http://bigoref.com/
+ 1. https://www.movingai.com/benchmarks/mapf.html
