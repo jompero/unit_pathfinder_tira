@@ -12,6 +12,7 @@
 ## 19.1
 1. Preparing repository for first return
 
+## Hours
 Day | Hours
 ---- | ----
 16.1. | 4 h
