@@ -8,8 +8,8 @@ public class Main {
 	public static void main(String[] args) {
 		// Basic input output
 		Dijkstra d = new Dijkstra();
-		int[][] matrix = {	{1, 2, 3, 1, 1, 1}, 
-							{5, 1, 3, 1, 1, 1}, 
+		int[][] matrix = {	{1, 1, 3, 1, 1, 1}, 
+							{1, 1, 3, 1, 1, 1}, 
 							{3, 3, 3, 1, 1, 1}, 
 							{3, 3, 3, 1, 1, 1}, 
 							{3, 3, 3, 1, 1, 1}, 

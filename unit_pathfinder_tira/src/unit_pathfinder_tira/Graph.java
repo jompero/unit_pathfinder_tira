@@ -21,19 +21,19 @@ public class Graph {
 		ArrayList<int[]> neighbors = new ArrayList<>();
 		if (xy[0] > 0) { 
 			int[] left = {xy[0]-1, xy[1]};
-			neighbors.add(left); 
+			if (getWeight(left) < 1) neighbors.add(left); 
 		}
 		if (xy[0] < matrix.length-1) {
 			int[] right = {xy[0]+1, xy[1]};
-			neighbors.add(right); 
+			if (getWeight(right) < 1) neighbors.add(right); 
 		}
 		if (xy[1] > 0) { 
 			int[] up = {xy[0], xy[1]-1};
-			neighbors.add(up); 
+			if (getWeight(up) < 1) neighbors.add(up); 
 		}
 		if (xy[1] < matrix.length-1) {
 			int[] down = {xy[0], xy[1]+1};
-			neighbors.add(down); 
+			if (getWeight(down) < 1) neighbors.add(down); 
 		}
 		return neighbors;
 	}
