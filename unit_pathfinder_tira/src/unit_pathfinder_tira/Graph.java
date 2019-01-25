@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 public class Graph {
 	int[][] matrix;
+	int width, height;
 	
 	public Graph(int[][] matrix) {
 		this.matrix = matrix;
+		height = matrix.length;
+		width = matrix[0].length;
 	}
 
 	public int getWeight(int[] v) {
@@ -20,20 +23,20 @@ public class Graph {
 	public ArrayList<int[]> neighbors(int[] xy) {
 		ArrayList<int[]> neighbors = new ArrayList<>();
 		if (xy[0] > 0) { 
-			int[] left = {xy[0]-1, xy[1]};
-			if (getWeight(left) < 1) neighbors.add(left); 
+			int[] left = {xy[0], xy[1]-1};
+			if (getWeight(left) > 0) neighbors.add(left); 
 		}
-		if (xy[0] < matrix.length-1) {
-			int[] right = {xy[0]+1, xy[1]};
-			if (getWeight(right) < 1) neighbors.add(right); 
+		if (xy[0] < height-1) {
+			int[] right = {xy[0], xy[1]+1};
+			if (getWeight(right) > 0) neighbors.add(right); 
 		}
 		if (xy[1] > 0) { 
-			int[] up = {xy[0], xy[1]-1};
-			if (getWeight(up) < 1) neighbors.add(up); 
+			int[] up = {xy[0]-1, xy[1]};
+			if (getWeight(up) > 0) neighbors.add(up); 
 		}
-		if (xy[1] < matrix.length-1) {
-			int[] down = {xy[0], xy[1]+1};
-			if (getWeight(down) < 1) neighbors.add(down); 
+		if (xy[1] < width-1) {
+			int[] down = {xy[0]+1, xy[1]};
+			if (getWeight(down) > 0) neighbors.add(down); 
 		}
 		return neighbors;
 	}

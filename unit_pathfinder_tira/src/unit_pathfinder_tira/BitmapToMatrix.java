@@ -1,6 +1,6 @@
 package unit_pathfinder_tira;
 
-import java.awt.image.BufferedImage;
+import javafx.scene.image.*;
 
 /**
  * @author danijompero
@@ -16,18 +16,19 @@ public class BitmapToMatrix {
 	 * @param img
 	 * @return
 	 */
-	public static int[][] convert(BufferedImage map) {
-		int x = map.getHeight();
-		int y = map.getWidth();
+	public static int[][] convert(Image map) {
+		int x = (int) map.getHeight();
+		int y = (int) map.getWidth();
 		int[][] matrix = new int[x][y];
 		
+		PixelReader pr = map.getPixelReader();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				int rgb = map.getRGB(i, j);
+				int rgb = pr.getArgb(i, j);
 				int r = (rgb >> 16) & 0xFF;
 				int g = (rgb >> 8) & 0xFF;
 				int b = (rgb & 0xFF);
-				matrix[j][i] = (r + g + b) / 3;
+				matrix[i][j] = (r + g + b) / 3;
 			}
 		}
 		

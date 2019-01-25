@@ -19,10 +19,11 @@ public class Dijkstra {
 	 * @return 
 	 */
 	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
-		int size = g.matrix.length;
-		if (size == 0 || g.matrix[0].length == 0) return null;
+		int height = g.matrix.length;
+		int width = g.matrix[0].length;
+		if (height == 0 || width == 0) return null;
 		
-		int[][] visited = new int[size][size];
+		int[][] visited = new int[height][width];
 		PriorityQueue<Node> queue = new PriorityQueue<>();
 		queue.add(new Node(start, g.getWeight(start), null));
 		
