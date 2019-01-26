@@ -35,3 +35,4 @@ Day | Hours
 24.1 | 0 h
 25.1 | 3 h
 Total | 11,5 h
+Altogether | 20,5 h
