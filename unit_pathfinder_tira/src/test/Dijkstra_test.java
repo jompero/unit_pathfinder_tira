@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import unit_pathfinder_tira.Dijkstra;
@@ -17,10 +18,10 @@ class Dijkstra_test {
 	void invalid_argument_test() {
 		int[][] matrix = {{1, 1}, {1, 1}};
 		Graph g = new Graph(matrix);
-		int[] start = {0, 0};
-		int[] end = {0, 2};
+		int[] start = {2, 0};
+		int[] end = {0, 0};
 
-	    assertThrows(NullPointerException.class, () -> {
+	    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
 	    		d.search(g, start, end);
 	    });
 	}
@@ -48,5 +49,41 @@ class Dijkstra_test {
 			}
 		}
 		assertEquals(exp, test, "test small graph");
+	}
+	
+	@Test
+	void test_small_right() {
+		// Test setup
+		int[][] matrix = {{1, 5, 5},
+						{1, 5, 5},
+						{1, 1, 1}};
+		Graph g = new Graph(matrix);
+		int[][] path = {{0, 0}, {1, 0}, {2, 0}, {2, 1}, {2, 2}};
+		
+		// Do test
+		ArrayList<int[]> ans = d.search(g, path[0], path[4]);
+		
+		// Check result
+		for (int i = 0; i < ans.size(); i++) {
+			Assertions.assertArrayEquals(path[i], ans.get(i), "test small right");
+		}
+	}
+
+	@Test
+	void test_small_left() {
+		// Test setup
+		int[][] matrix = {{1, 1, 1},
+						{5, 5, 1},
+						{5, 5, 1}};
+		Graph g = new Graph(matrix);
+		int[][] path = {{0, 0}, {0, 1}, {0, 2}, {1, 2}, {2, 2}};
+		
+		// Do test
+		ArrayList<int[]> ans = d.search(g, path[0], path[4]);
+		
+		// Check result
+		for (int i = 0; i < ans.size(); i++) {
+			Assertions.assertArrayEquals(path[i], ans.get(i), "test small right");
+		}
 	}
 }

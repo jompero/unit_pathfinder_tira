@@ -42,6 +42,7 @@ public class Main extends Application {
         // Instantiate Graph with the selected image converted to weighted matrix
         Graph g = new Graph(BitmapToMatrix.convert(img));
         Dijkstra d = new Dijkstra();
+        AStar a = new AStar();
 		
 		int[] start = new int[2];
 		int[] end = {-1, -1};
@@ -54,9 +55,15 @@ public class Main extends Application {
                 System.out.println((int) event.getY());
                 
                 if (inputQueue(start, end, (int) event.getX(), (int) event.getY())) {
-                		ArrayList<int[]> result = d.search(g, start, end);
-                		if (result == null) return;
-                		highlightPixels(gc, result);
+                		ArrayList<int[]> dResult = d.search(g, start, end);
+                		ArrayList<int[]> aResult = a.search(g, start, end);
+                		gc.clearRect(0, 0, 512, 512);
+                		if (dResult != null) {
+                			highlightPixels(gc, dResult, Color.YELLOW);
+                		}
+                		if (aResult != null) {
+                			highlightPixels(gc, aResult, Color.RED);
+                		}
                 }
             }
         });
@@ -73,13 +80,11 @@ public class Main extends Application {
 	}
 	
 	// Take the result from Dijkstra and draw a yellow line to indicate the path
-	void highlightPixels(GraphicsContext gc, ArrayList<int[]> pixels) {
-		gc.clearRect(0, 0, 512, 512);
-		gc.setStroke(Color.YELLOW);
+	void highlightPixels(GraphicsContext gc, ArrayList<int[]> pixels, Color color) {
+		gc.setStroke(color);
 		gc.setLineWidth(3);
 		gc.beginPath();
 		for (int[] i : pixels) {
-			System.out.println(i[0] + " " + i[1]);
 			gc.lineTo(i[0], i[1]); 
 		}
 		gc.stroke();
