@@ -23,6 +23,10 @@
 ## 25.1
 1. Further bug fixing the map display system. 
 1. Added functionality to draw the path of Dijkstra result.
+1. Commit week 2 progress
+
+## 26.1
+1. Forgot to push the week 2 progress but did it today...
 
 ## Hours
 Day | Hours
