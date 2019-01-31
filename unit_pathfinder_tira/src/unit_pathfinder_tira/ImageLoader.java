@@ -10,20 +10,20 @@ import javafx.scene.image.*;
 public class ImageLoader {
 
 	Desktop desktop = Desktop.getDesktop();
-	
+
 	public static Image trigger(Stage stage) {
 		Image img = null;
-		
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load map");
-        fileChooser.getExtensionFilters().addAll(
-                new ExtensionFilter("Image Files", "*.bmp", "*.png", "*.jpg", "*.gif"));
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-        		img = new Image(file.toURI().toString(), 512, 512, false, false);
-        }
-        
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Load map");
+		fileChooser.getExtensionFilters()
+				.addAll(new ExtensionFilter("Image Files", "*.bmp", "*.png", "*.jpg", "*.gif"));
+		File file = fileChooser.showOpenDialog(stage);
+		if (file != null) {
+			img = new Image(file.toURI().toString(), 512, 512, false, false);
+		}
+
 		return img;
 	}
-	
+
 }
