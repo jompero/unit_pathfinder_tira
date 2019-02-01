@@ -15,6 +15,10 @@ public class Graph {
 	public int getWeight(int[] v) {
 		return matrix[v[0]][v[1]];
 	}
+	
+	public int getWeight(int x, int y) {
+		return matrix[x][y];
+	}
 
 	/**
 	 * @param xy
@@ -45,14 +49,19 @@ public class Graph {
 		}
 		return neighbors;
 	}
+
+	public static double distance(int[] a, int[] b) {
+		// Return Euclidean distance between the two points
+		return (b[0] - a[0]) * 2 + (b[1] - a[1]) * 2;
+	}
 }
 
 class Node implements Comparable<Node> {
 	int[] xy;
-	int weight;
+	double weight;
 	Node parent;
 
-	public Node(int[] xy, int weight, Node parent) {
+	public Node(int[] xy, double weight, Node parent) {
 		if (xy.length > 2 || xy.length < 2) {
 			throw new IllegalArgumentException();
 		}
@@ -72,6 +81,11 @@ class Node implements Comparable<Node> {
 
 	@Override
 	public int compareTo(Node o) {
-		return weight - o.weight;
+		if (weight == o.weight) return 0;
+		if (weight > o.weight) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
 }

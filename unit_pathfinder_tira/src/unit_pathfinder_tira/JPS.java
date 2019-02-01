@@ -11,7 +11,7 @@ public class JPS {
 	int visitedNodes = 0;
 
 	/**
-	 * Jump-point search (JPS) shortest path search algorithm.
+	 * Jump-point search (JPS) shortest path search algorithm. Not fully implemented yet.
 	 * 
 	 * @param g
 	 *            Graph from which path is searched from
@@ -42,11 +42,14 @@ public class JPS {
 		// distance to end
 		PriorityQueue<Node> queue = new PriorityQueue<>();
 		queue.add(new Node(start, 0, null));
-		visited[start[0]][start[1]] = 1;
+		
 		while (!queue.isEmpty()) {
 			// Poll next node from queue and check if we've reached the end
 			// else continue search
 			Node n = queue.poll();
+			visited[start[0]][start[1]] = 1;
+			
+			// TODO: Ensure benchmarking data is calculated correctly
 			if (Arrays.equals(n.xy, end)) {
 				ArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
@@ -55,20 +58,8 @@ public class JPS {
 				return path;
 			}
 
-			// Check neighbors of polled node and calculate estimated distance to end
-			// and add to queue
-			for (int[] neighbor : g.neighbors(n.xy)) {
-				int newWeight = visited[n.xy[0]][n.xy[1]] + g.getWeight(neighbor);
-				int oldWeight = visited[neighbor[0]][neighbor[1]];
-				if (oldWeight == 0 || oldWeight > newWeight) {
-					visited[neighbor[0]][neighbor[1]] = newWeight;
-					visitedNodes++;
-
-					int hWeight = newWeight;
-					queue.add(new Node(neighbor, hWeight, n));
-				}
-
-			}
+			// Check neighbors of polled node and add all successors to the queue
+			queue.addAll(successors(g, n, end));
 		}
 
 		return null;
@@ -83,9 +74,9 @@ public class JPS {
 	 */
 	private ArrayList<Node> successors(Graph g, Node start, int[] end) {
 		ArrayList<Node> successors = new ArrayList<>();
-		ArrayList<int[]> neighbors = prune(g.neighbors(start.xy));
+		ArrayList<int[]> neighbors = prune(start, g.neighbors(start.xy));
 		for (int[] n : neighbors) {
-			Node s = jump(start, n, g);
+			Node s = jump(start, n, end, g);
 			if (s != null) {
 				successors.add(s);
 			}
@@ -93,42 +84,63 @@ public class JPS {
 		return successors;
 	}
 	
-//	Require: x: initial node, ~d: direction, s: start, g: goal
-//	1: n ← step(x, ~d)
-//	2: if n is an obstacle or is outside the grid then
-//	3: return null
-//	4: if n = g then
-//	5: return n
-//	6: if ∃ n
-//	0 ∈ neighbours(n) s.t. n
-//	0
-//	is forced then
-//	7: return n
-//	8: if ~d is diagonal then
-//	9: for all i ∈ {1, 2} do
-//	10: if jump(n, ~di
-//	, s, g) is not null then
-//	11: return n
-//	12: return jump(n, ~d, s, g)
-
 	/**
-	 * Method will go though Nodes in a direction and returns first successor Node.
-	 * A node is interesting if end can be reached from it or it reaches behind an obstacle.
+	 * Method will jump Nodes in a direction and returns first successor Node.
+	 * A node is a successor if end can be reached from it or it has a forced neighbor.
 	 * @param start Starting Node
 	 * @param towards Coordinate towards which the method will move.
 	 * @param g Graph
 	 * @return Successor Node 
 	 */
-	private Node jump(Node start, int[] towards, Graph g) {
+	private Node jump(Node start, int[] towards, int[] end, Graph g) {
+		// Determine dir based on 'start -> towards' 
+		// TODO I think this returns an incorrect array. Also maybe I could delegate this to Graph instead?
 		int[] dir = {towards[0]-start.xy[0], towards[1]-start.xy[1]};
 		
-	return null;
-}
+		// If wall, return null
+		if (g.getWeight(start.xy) == 0) return null;
+		
+		// If goal, return new Node from 'towards'
+		if (Arrays.equals(start.xy, end)) return new Node(towards, Graph.distance(start.xy, towards), start);
+		
+		// If forced node is found in neighbor, return new Node from 'towards'
+		// Diagonal check
+		if (dir[0] != 0 && dir[1] != 0) {
+            if ((g.getWeight(towards[0] - dir[0], towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - dir[0], towards[1]) == 0) ||
+        			(g.getWeight(towards[0] + dir[0], towards[1] - dir[1]) != 0 && g.getWeight(towards[0], towards[1] - dir[1]) == 0)) {
+            	return new Node(towards, Graph.distance(start.xy, towards), start);
+            }
+        // Horizontal check
+		} else {
+            if (dir[0] != 0) {
+                if ((g.getWeight(towards[0] + dir[0], towards[1] + 1) != 0 && g.getWeight(towards[0], towards[1] + 1) == 0) ||
+                		(g.getWeight(towards[0] + dir[0], towards[1] - 1) != 0 && g.getWeight(towards[0], towards[1]) == 0)) {
+                		return new Node(towards, Graph.distance(start.xy, towards), start);
+                }
+            } else {
+                if ((g.getWeight(towards[0] + 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] + 1, towards[1]) == 0) ||
+                		(g.getWeight(towards[0] - 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - 1, towards[1]) == 0)) {
+                		return new Node(towards, Graph.distance(start.xy, towards), start);
+                }
+            }
+		}
+		return null;
+	}
 
-	private ArrayList<int[]> prune(ArrayList<int[]> neighbors) {
-	// TODO Auto-generated method stub
-	return null;
-}
+	/**
+	 * Returns the 
+	 * @param neighbors
+	 * @return
+	 */
+	private ArrayList<int[]> prune(Node start, ArrayList<int[]> neighbors) {
+		ArrayList<int[]> prunedNeighbors = new ArrayList<>();
+		if (start.parent != null) {
+			// TODO: Prune neighbors that can be ignored
+		} else {
+			return neighbors;
+		}
+		return null;
+	}
 
 	private void logBenchmark() {
 		System.out.println(
