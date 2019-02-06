@@ -74,7 +74,7 @@ public class JPS {
 	 */
 	private ArrayList<Node> successors(Graph g, Node start, int[] end) {
 		ArrayList<Node> successors = new ArrayList<>();
-		ArrayList<int[]> neighbors = prune(start, g.neighbors(start.xy));
+		ArrayList<int[]> neighbors = prune(g, start);
 		for (int[] n : neighbors) {
 			Node s = jump(start, n, end, g);
 			if (s != null) {
@@ -132,12 +132,44 @@ public class JPS {
 	 * @param neighbors
 	 * @return
 	 */
-	private ArrayList<int[]> prune(Node start, ArrayList<int[]> neighbors) {
-		ArrayList<int[]> prunedNeighbors = new ArrayList<>();
-		if (start.parent != null) {
-			// TODO: Prune neighbors that can be ignored
+	private ArrayList<int[]> prune(Graph g, Node start) {
+		ArrayList<int[]> neighbors = new ArrayList<>();
+		Node parent = start.parent;
+		if (parent != null) {
+			int x = start.xy[0];
+			int y = start.xy[1];
+			
+			// Get normalized direction from parent
+			int dir[] = Graph.getNormalizedDir(parent.xy, start.xy);
+			int dirX = dir[0];
+			int dirY = dir[1];
+			
+			// If direction is diagonal
+			if (dirX > 0 && dirY > 0) {
+                if (g.getWeight(x, y + dirY) > 0) neighbors.add(Graph.coordinate(x, y + dirY));
+                if (g.getWeight(x + dirX, y) > 0) neighbors.add(Graph.coordinate(x + dirX, y));
+                if (g.getWeight(x + dirX, y + dirY) > 0) neighbors.add(Graph.coordinate(x + dirX, y + dirY));
+                // If perpendicularly blocked, add forced nodes
+                if (g.getWeight(x, y - dirY) == 0) neighbors.add(Graph.coordinate(x + dirX, y - dirY));
+                if (g.getWeight(x + dirX, y) == 0) neighbors.add(Graph.coordinate(x = dirY, y + dirX));
+            
+            // If direction is horizontal
+			} else if (dirX == 0) {
+                if (g.getWeight(x, y + dirY) > 0) neighbors.add(Graph.coordinate(x, y + dirY));
+                // If perpendicularly blocked, add forced nodes
+                if (g.getWeight(x + 1, y) == 0) neighbors.add(Graph.coordinate(x + 1, y + dirY));
+                if (g.getWeight(x - 1, y) == 0) neighbors.add(Graph.coordinate(x - 1, y + dirY));
+			
+            // If direction is vertical
+			} else {
+                if (g.getWeight(x + dirX, y) > 0) neighbors.add(Graph.coordinate(x + dirX, y));
+                // If perpendicularly blocked, add forced nodes
+                if (g.getWeight(x, y + 1) == 0) neighbors.add(Graph.coordinate(x + dirX, y + 1));
+                if (g.getWeight(x - 1, y) == 0) neighbors.add(Graph.coordinate(x + dirX, y - 1));
+			}
+			
 		} else {
-			return neighbors;
+			return g.neighbors(start.xy);
 		}
 		return null;
 	}

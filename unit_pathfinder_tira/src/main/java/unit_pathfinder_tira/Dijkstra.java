@@ -10,20 +10,17 @@ import java.util.PriorityQueue;
  */
 public class Dijkstra {
 	// Benchmarking data
-	int totalWeight = 0;
+	double totalWeight = 0;
 	int nodesInPath = 0;
 	int visitedNodes = 0;
 
 	/**
 	 * Dijkstra's shortest path search algorithm.
 	 * 
-	 * @param g
-	 *            Graph from which path is searched from
-	 * @param start
-	 *            The starting point
-	 * @param end
-	 *            The ending point
-	 * @return
+	 * @param g 		Graph from which path is searched from
+	 * @param start 	The starting point
+	 * @param end 	The ending point
+	 * @return		Shortest path between start and end
 	 */
 	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
 		int height = g.matrix.length;
@@ -66,7 +63,9 @@ public class Dijkstra {
 
 			// Add polled node's neighbors to queue
 			for (int[] neighbor : g.neighbors(n.xy)) {
-				queue.add(new Node(neighbor, n.weight + g.getWeight(neighbor), n));
+				// We already know that the neighbors are a unit away so we can use the Euclidean distance as weight
+				double weight = Graph.distance(n.xy, neighbor);
+				queue.add(new Node(neighbor, n.weight + weight, n));
 			}
 		}
 

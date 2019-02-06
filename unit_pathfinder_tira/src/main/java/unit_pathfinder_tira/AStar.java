@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 
 public class AStar {
 	// Benchmarking data
-	int totalWeight = 0;
+	double totalWeight = 0;
 	int nodesInPath = 0;
 	int visitedNodes = 0;
 
@@ -35,7 +35,7 @@ public class AStar {
 		}
 
 		// Create visited matrix where the value indicates true weight from start
-		int[][] visited = new int[height][width];
+		double[][] visited = new double[height][width];
 		visitedNodes = 0;
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
@@ -58,13 +58,15 @@ public class AStar {
 			// Check neighbors of polled node and calculate estimated distance to end
 			// and add to queue
 			for (int[] neighbor : g.neighbors(n.xy)) {
-				int newWeight = visited[n.xy[0]][n.xy[1]] + g.getWeight(neighbor);
-				int oldWeight = visited[neighbor[0]][neighbor[1]];
+				double newWeight = visited[n.xy[0]][n.xy[1]] + Graph.distance(n.xy, neighbor);
+				double oldWeight = visited[neighbor[0]][neighbor[1]];
 				if (oldWeight == 0 || oldWeight > newWeight) {
+					// Add new weight in the weight map
 					visited[neighbor[0]][neighbor[1]] = newWeight;
 					visitedNodes++;
-
-					int hWeight = newWeight + heuristic(neighbor, end);
+					
+					// Add Euclidean distance as heuristic value
+					int hWeight = (int) (newWeight + Graph.distance(neighbor, end));
 					queue.add(new Node(neighbor, hWeight, n));
 				}
 
@@ -72,19 +74,6 @@ public class AStar {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Heuristic for A* algorithm; Manhattan distance.
-	 * 
-	 * @param a
-	 *            Coordinates of starting point
-	 * @param b
-	 *            Coordinates of ending point
-	 * @return Manhattan distance between a and b.
-	 */
-	private int heuristic(int[] a, int[] b) {
-		return (Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1])) * 10;
 	}
 
 	private void logBenchmark() {

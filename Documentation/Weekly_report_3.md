@@ -17,7 +17,7 @@
 1. Reading about JPS. Looks like I will modify the maps to be of uniform.
 1. Started implementing JPS.
 
-## 01.1
+## 01.2
 1. Continued with JPS implementation, still not ready yet.
 
 ## Hours

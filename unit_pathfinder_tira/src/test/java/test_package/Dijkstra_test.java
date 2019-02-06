@@ -1,4 +1,4 @@
-package test;
+package test_package;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,18 +37,15 @@ class Dijkstra_test {
 		expected.add(start);
 		expected.add(end);
 
-		boolean exp = true;
-		boolean test = true;
 		if (result.size() != 2) {
-			test = false;
+			fail("incorrect path returned");
 		} else {
 			for (int i = 0; i < 2; i++) {
 				if (!Arrays.equals(result.get(i), expected.get(i))) {
-					test = false;
+					fail("incorrect path returned");
 				}
 			}
 		}
-		assertEquals(exp, test, "test small graph");
 	}
 
 	@Test
@@ -58,10 +55,10 @@ class Dijkstra_test {
 							{ 1, 5, 5 }, 
 							{ 1, 1, 1 } };
 		Graph g = new Graph(matrix);
-		int[][] path = { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 2, 1 }, { 2, 2 } };
+		int[][] path = { { 0, 0 }, { 1, 1 }, { 2, 2 } };
 
 		// Do test
-		ArrayList<int[]> ans = d.search(g, path[0], path[4]);
+		ArrayList<int[]> ans = d.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -76,10 +73,10 @@ class Dijkstra_test {
 							{ 5, 5, 1 }, 
 							{ 5, 5, 1 } };
 		Graph g = new Graph(matrix);
-		int[][] path = { { 0, 0 }, { 0, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
+		int[][] path = { { 0, 0 }, { 1, 1 }, { 2, 2 } };
 
 		// Do test
-		ArrayList<int[]> ans = d.search(g, path[0], path[4]);
+		ArrayList<int[]> ans = d.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
