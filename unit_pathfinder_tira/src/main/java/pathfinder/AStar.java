@@ -1,8 +1,11 @@
-package unit_pathfinder_tira;
+package pathfinder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
+
+import graph.Graph;
+import graph.Node;
 
 public class AStar {
 	// Benchmarking data
@@ -22,8 +25,9 @@ public class AStar {
 	 * @return
 	 */
 	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
-		int height = g.matrix.length;
-		int width = g.matrix[0].length;
+		// Ensure there is a matrix
+		int height = g.getHeight();
+		int width = g.getWidth();
 		if (height == 0 || width == 0)
 			return null;
 
@@ -47,7 +51,9 @@ public class AStar {
 			// Poll next node from queue and check if we've reached the end
 			// else continue search
 			Node n = queue.poll();
-			if (Arrays.equals(n.xy, end)) {
+			int[] xy = n.getXY();
+			
+			if (Arrays.equals(xy, end)) {
 				ArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
 				totalWeight = visited[end[0]][end[1]] - 1;
@@ -57,8 +63,8 @@ public class AStar {
 
 			// Check neighbors of polled node and calculate estimated distance to end
 			// and add to queue
-			for (int[] neighbor : g.neighbors(n.xy)) {
-				double newWeight = visited[n.xy[0]][n.xy[1]] + Graph.distance(n.xy, neighbor);
+			for (int[] neighbor : g.neighbors(xy)) {
+				double newWeight = visited[xy[0]][xy[1]] + Graph.distance(xy, neighbor);
 				double oldWeight = visited[neighbor[0]][neighbor[1]];
 				if (oldWeight == 0 || oldWeight > newWeight) {
 					// Add new weight in the weight map

@@ -2,10 +2,15 @@ package unit_pathfinder_tira;
 
 import java.util.ArrayList;
 
+import graph.BitmapToMatrix;
+import graph.Graph;
 import javafx.application.*;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import pathfinder.AStar;
+import pathfinder.Dijkstra;
+import pathfinder.JPS;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -55,10 +60,8 @@ public class Main extends Application {
 		root.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println((int) event.getX());
-				System.out.println((int) event.getY());
-
 				if (inputQueue(start, end, (int) event.getX(), (int) event.getY())) {
+					System.out.println(String.format("Searching path between (%o, %o) and (%o, %o). Click elsewhere to set the new end point.", start[0], start[1], end[0], end[1]));
 					ArrayList<int[]> dResult = d.search(g, start, end);
 					ArrayList<int[]> aResult = a.search(g, start, end);
 					ArrayList<int[]> jResult = j.search(g, start, end);
@@ -72,6 +75,8 @@ public class Main extends Application {
 					if (jResult != null) {
 						highlightPixels(gc, jResult, Color.MAGENTA);
 					}
+				} else {
+					System.out.println(String.format("Starting point set at (%o, %o), click elsewhere to set the end point.", end[0], end[1]));
 				}
 			}
 		});

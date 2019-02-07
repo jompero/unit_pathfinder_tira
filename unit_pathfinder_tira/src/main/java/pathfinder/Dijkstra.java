@@ -1,13 +1,12 @@
-package unit_pathfinder_tira;
+package pathfinder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-/**
- * @author danijompero
- *
- */
+import graph.Graph;
+import graph.Node;
+
 public class Dijkstra {
 	// Benchmarking data
 	double totalWeight = 0;
@@ -23,8 +22,9 @@ public class Dijkstra {
 	 * @return		Shortest path between start and end
 	 */
 	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
-		int height = g.matrix.length;
-		int width = g.matrix[0].length;
+		// Ensure there is a matrix
+		int height = g.getHeight();
+		int width = g.getWidth();
 		if (height == 0 || width == 0)
 			return null;
 
@@ -46,26 +46,27 @@ public class Dijkstra {
 		while (!queue.isEmpty()) {
 			// Poll next node from queue and check if we reached the end
 			Node n = queue.poll();
-			if (Arrays.equals(n.xy, end)) {
+			int[] xy = n.getXY();
+			if (Arrays.equals(xy, end)) {
 				ArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
-				totalWeight = n.weight;
+				totalWeight = n.getWeight();
 				logBenchmark();
 				return path;
 			}
 			// Also if visited
-			if (visited[n.xy[0]][n.xy[1]]) {
+			if (visited[xy[0]][xy[1]]) {
 				continue;
 			}
 			// Mark visited
-			visited[n.xy[0]][n.xy[1]] = true;
+			visited[xy[0]][xy[1]] = true;
 			visitedNodes++;
 
 			// Add polled node's neighbors to queue
-			for (int[] neighbor : g.neighbors(n.xy)) {
+			for (int[] neighbor : g.neighbors(xy)) {
 				// We already know that the neighbors are a unit away so we can use the Euclidean distance as weight
-				double weight = Graph.distance(n.xy, neighbor);
-				queue.add(new Node(neighbor, n.weight + weight, n));
+				double weight = Graph.distance(xy, neighbor);
+				queue.add(new Node(neighbor, n.getWeight() + weight, n));
 			}
 		}
 

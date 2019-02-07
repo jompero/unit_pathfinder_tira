@@ -1,15 +1,27 @@
-package unit_pathfinder_tira;
+package graph;
 
 import java.util.ArrayList;
 
 public class Graph {
-	int[][] matrix;
-	int width, height;
+	final int[][] matrix;
+	final int width, height;
 
 	public Graph(int[][] matrix) {
 		this.matrix = matrix;
 		height = matrix.length;
 		width = matrix[0].length;
+	}
+	
+	public int[][] getMatrix() {
+		return matrix;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 
 	public int getWeight(int[] v) {
@@ -17,6 +29,7 @@ public class Graph {
 	}
 	
 	public int getWeight(int x, int y) {
+		if (x < 0 || x >= height || y < 0 || y >= width) return 0;
 		if (matrix[x][y] > 0) return 1;
 		return 0;
 	}
@@ -77,7 +90,7 @@ public class Graph {
 	 * @param y		Y Coordinate
 	 * @return		{ x, y }
 	 */
-	static int[] coordinate(int x, int y) {
+	public static int[] coordinate(int x, int y) {
 		int[] c = { x, y };
 		return c;
 	}
@@ -107,40 +120,5 @@ public class Graph {
 		if (dir[0] != 0) dir[0] = dir[0]/Math.abs(dir[0]);
 		if (dir[1] != 0) dir[1] = dir[1]/Math.abs(dir[1]);
 		return dir;
-	}
-}
-
-// A node is an expert coordinate which knows its parent and can hold a weight value
-class Node implements Comparable<Node> {
-	int[] xy;
-	double weight;
-	Node parent;
-
-	public Node(int[] xy, double weight, Node parent) {
-		if (xy.length > 2 || xy.length < 2) {
-			throw new IllegalArgumentException();
-		}
-		this.xy = xy;
-		this.weight = weight;
-		this.parent = parent;
-	}
-
-	public ArrayList<int[]> path() {
-		ArrayList<int[]> path = new ArrayList<>();
-		if (parent != null) {
-			path.addAll(parent.path());
-		}
-		path.add(xy);
-		return path;
-	}
-
-	@Override
-	public int compareTo(Node o) {
-		if (weight == o.weight) return 0;
-		if (weight > o.weight) {
-			return 1;
-		} else {
-			return -1;
-		}
 	}
 }

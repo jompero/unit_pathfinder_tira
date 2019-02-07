@@ -6,10 +6,10 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.*;
 
 import org.junit.jupiter.api.Test;
 
+import graph.Graph;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import unit_pathfinder_tira.Graph;
 
 class Graph_test {
 

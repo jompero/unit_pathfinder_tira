@@ -8,8 +8,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import unit_pathfinder_tira.Dijkstra;
-import unit_pathfinder_tira.Graph;
+import graph.Graph;
+import pathfinder.Dijkstra;
 
 class Dijkstra_test {
 	Dijkstra d = new Dijkstra();

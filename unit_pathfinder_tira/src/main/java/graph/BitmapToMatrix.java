@@ -1,4 +1,4 @@
-package unit_pathfinder_tira;
+package graph;
 
 import javafx.scene.image.*;
 

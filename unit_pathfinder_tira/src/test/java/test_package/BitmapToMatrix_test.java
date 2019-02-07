@@ -6,7 +6,7 @@ import javafx.scene.image.*;
 
 import org.junit.jupiter.api.Test;
 
-import unit_pathfinder_tira.BitmapToMatrix;
+import graph.BitmapToMatrix;
 
 class BitmapToMatrix_test {
 

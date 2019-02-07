@@ -3,10 +3,10 @@ package test_package;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import graph.Graph;
+import pathfinder.AStar;
 
-import unit_pathfinder_tira.AStar;
-import unit_pathfinder_tira.Graph;
+import java.util.ArrayList;
 
 class AStar_test {
 
