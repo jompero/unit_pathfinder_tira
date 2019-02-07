@@ -156,7 +156,7 @@ public class JPS {
 		// Create new Node for next start
 		int[] startXY = start.getXY();
 		double startWeight = start.getWeight();
-		double endWeight = startWeight + Graph.distance(startXY, end);
+		double endWeight = startWeight + Graph.distance(startXY, towards);
 		Node nextStart = new Node(towards, endWeight, start);
 		visitedNodes++;
 		
