@@ -1,5 +1,5 @@
 # Implementation document
-![Image of Unit Pathfinder UML Diagram](unit_pathfinder_tira/Documentation/Resources/UML.jpg)
+![Image of Unit Pathfinder UML Diagram](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Resources/UML.jpg)
   
 Unit Pathfinder now consists of 3 main parts; the pathfinders, graph and GUI. The user can load Maps by using the GUI and trigger the pathfinders by clicking coordinates on the graph. In general the program is as designed from the start, however, with the addition of JPS pathfinder, the weighted graph was edited to a uniform-cost.
 
