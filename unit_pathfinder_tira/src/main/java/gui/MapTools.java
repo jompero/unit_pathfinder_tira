@@ -1,10 +1,9 @@
-package GUI;
+package gui;
 
 import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;

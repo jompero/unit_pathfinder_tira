@@ -1,7 +1,7 @@
 package unit_pathfinder_tira;
 
-import GUI.MapTools;
-import GUI.MapView;
+import gui.MapTools;
+import gui.MapView;
 import javafx.application.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;

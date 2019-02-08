@@ -1,5 +1,5 @@
 # Design document
-Turtle Path is an application that solves shortest path problem for a unit on a 2D grid.  
+Unit Pathfinder is an application that solves shortest path problem for a unit on a 2D grid.  
   
 For benchmarking both Dijkstra’s and A* algorithms are used for time and space complexity as they are well known path finding algorithms.
 

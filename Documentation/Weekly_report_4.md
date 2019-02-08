@@ -38,6 +38,6 @@ Day | Hours
 05.2 | 5 h
 06.2 | 4 h
 07.2 | 5 h
-08.2 | 5 h
-Total | X h
-Altogether | 32.25 h
+08.2 | 7 h
+Total | 23 h
+Altogether | 55.25 h
