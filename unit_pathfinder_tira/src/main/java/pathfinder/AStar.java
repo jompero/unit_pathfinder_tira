@@ -7,12 +7,7 @@ import java.util.PriorityQueue;
 import graph.Graph;
 import graph.Node;
 
-public class AStar {
-	// Benchmarking data
-	double totalWeight = 0;
-	int nodesInPath = 0;
-	int visitedNodes = 0;
-
+public class AStar extends Pathfinder {
 	/**
 	 * A* shortest path search algorithm.
 	 * 
@@ -25,6 +20,9 @@ public class AStar {
 	 * @return
 	 */
 	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
+		// Log start time
+		time = System.currentTimeMillis();
+		
 		// Ensure there is a matrix
 		int height = g.getHeight();
 		int width = g.getWidth();
@@ -35,6 +33,8 @@ public class AStar {
 		if (Arrays.equals(start, end)) {
 			ArrayList<int[]> result = new ArrayList<>();
 			result.add(end);
+			nodesInPath = 1;
+			time = System.currentTimeMillis() - time;
 			return result;
 		}
 
@@ -57,6 +57,7 @@ public class AStar {
 				ArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
 				totalWeight = visited[end[0]][end[1]] - 1;
+				time = System.currentTimeMillis() - time;
 				logBenchmark();
 				return path;
 			}

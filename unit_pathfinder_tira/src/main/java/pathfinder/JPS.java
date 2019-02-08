@@ -7,12 +7,7 @@ import java.util.PriorityQueue;
 import graph.Graph;
 import graph.Node;
 
-public class JPS {
-	// Benchmarking data
-	double totalWeight = 0;
-	int nodesInPath = 0;
-	int visitedNodes = 0;
-
+public class JPS extends Pathfinder {
 	/**
 	 * Jump-point search (JPS) shortest path search algorithm. Not fully implemented yet.
 	 * 
@@ -25,6 +20,9 @@ public class JPS {
 	 * @return
 	 */
 	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
+		// Log start time
+		time = System.currentTimeMillis();
+		
 		// Ensure there is a matrix
 		int height = g.getHeight();
 		int width = g.getWidth();
@@ -35,6 +33,8 @@ public class JPS {
 		if (Arrays.equals(start, end)) {
 			ArrayList<int[]> result = new ArrayList<>();
 			result.add(end);
+			nodesInPath = 1;
+			time = System.currentTimeMillis() - time;
 			return result;
 		}
 
@@ -56,6 +56,7 @@ public class JPS {
 				ArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
+				time = System.currentTimeMillis() - time;
 				logBenchmark();
 				return path;
 			}

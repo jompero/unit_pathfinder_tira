@@ -7,12 +7,7 @@ import java.util.PriorityQueue;
 import graph.Graph;
 import graph.Node;
 
-public class Dijkstra {
-	// Benchmarking data
-	double totalWeight = 0;
-	int nodesInPath = 0;
-	int visitedNodes = 0;
-
+public class Dijkstra extends Pathfinder {
 	/**
 	 * Dijkstra's shortest path search algorithm.
 	 * 
@@ -22,6 +17,9 @@ public class Dijkstra {
 	 * @return		Shortest path between start and end
 	 */
 	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
+		// Log start time
+		time = System.currentTimeMillis();
+		
 		// Ensure there is a matrix
 		int height = g.getHeight();
 		int width = g.getWidth();
@@ -32,6 +30,8 @@ public class Dijkstra {
 		if (Arrays.equals(start, end)) {
 			ArrayList<int[]> result = new ArrayList<>();
 			result.add(end);
+			nodesInPath = 1;
+			time = System.currentTimeMillis() - time;
 			return result;
 		}
 
@@ -51,6 +51,7 @@ public class Dijkstra {
 				ArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
+				time = System.currentTimeMillis() - time;
 				logBenchmark();
 				return path;
 			}

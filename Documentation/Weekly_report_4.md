@@ -25,6 +25,10 @@
 1. Fixed JPS to a degree, there are still some edge cases where it doesn't find a path. Will fix after a break.
 1. JPS fully functional now it seems. :)
 
+## 08.2
+1. GUI improvements.
+1. Implementation and Testing Documentation started.
+1. Noticed also a hanging bug on certain scenarios for JPS. No time to investigate today.
 
 ## Hours
 Day | Hours
@@ -34,6 +38,6 @@ Day | Hours
 05.2 | 5 h
 06.2 | 4 h
 07.2 | 5 h
-08.2 | X h
+08.2 | 5 h
 Total | X h
 Altogether | 32.25 h

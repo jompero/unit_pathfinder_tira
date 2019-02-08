@@ -1,4 +1,4 @@
-package unit_pathfinder_tira;
+package GUI;
 
 import java.awt.Desktop;
 import java.io.File;
