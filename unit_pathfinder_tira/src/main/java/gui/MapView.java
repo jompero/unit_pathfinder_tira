@@ -133,4 +133,8 @@ public class MapView extends StackPane {
 		gcd.clearRect(0, 0, 512, 512);
 		gcj.clearRect(0, 0, 512, 512);
 	}
+
+	public void toggleLayer(int i, Boolean state) {
+		getChildren().get(i+1).setVisible(state);;
+	}
 }

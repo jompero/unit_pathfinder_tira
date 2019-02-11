@@ -10,6 +10,7 @@ import javafx.scene.text.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 
 public class MapTools extends VBox {
 	MapView mv;
@@ -72,11 +73,14 @@ public class MapTools extends VBox {
 			forms[i] = new VBox();
 			forms[i].setMinWidth(312);
 			
-			// Make a form title
-			Label title = new Label(titles[i]);
-			title.setPadding(new Insets(2, 0, 2, 0));
-			title.setFont(Font.font("Verdana", 14));
-			forms[i].getChildren().add(title);
+			// Make a form title with a layer toggle checkbox
+			//Label title = new Label(titles[i]);
+			//title.setPadding(new Insets(2, 0, 2, 0));
+			//title.setFont(Font.font("Verdana", 14));
+			//forms[i].getChildren().add(title);
+			// Also make a check box to allow hiding of the draw layer for this pathfinder
+			CheckBox cb = layerToggle(i, titles[i]);
+			forms[i].getChildren().add(cb);
 			
 			// Populate fields
 			for (int j = 0; j < numFields; j++) {
@@ -112,5 +116,26 @@ public class MapTools extends VBox {
 			mv.loadMap(img);
 		});
 		this.getChildren().add(loadMapButton);
+	}
+	
+	/**
+	 * Creates a CheckBox which allows hiding of MapView's layers
+	 * @param i 		Layer index to be hidden
+	 * @param label		Button label
+	 * @return
+	 */
+	CheckBox layerToggle(int i, String label) {
+		CheckBox cb = new CheckBox(label);
+		// Default checked
+		cb.setIndeterminate(false);
+		cb.setSelected(true);
+		// Increase size
+		cb.setPadding(new Insets(2, 0, 2, 0));
+		cb.setFont(Font.font("Verdana", 14));
+		
+		cb.setOnAction(event -> {
+			mv.toggleLayer(i, cb.selectedProperty().get());
+		});
+		return cb;
 	}
 }
