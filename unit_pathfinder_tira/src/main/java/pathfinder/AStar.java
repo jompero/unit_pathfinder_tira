@@ -40,7 +40,7 @@ public class AStar extends Pathfinder {
 
 		// Create visited matrix where the value indicates true weight from start
 		double[][] visited = new double[height][width];
-		visitedNodes = 0;
+		visitedList = new ArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
 		// distance to end
@@ -58,7 +58,6 @@ public class AStar extends Pathfinder {
 				nodesInPath = path.size();
 				totalWeight = visited[end[0]][end[1]] - 1;
 				time = System.currentTimeMillis() - time;
-				logBenchmark();
 				return path;
 			}
 
@@ -70,7 +69,7 @@ public class AStar extends Pathfinder {
 				if (oldWeight == 0 || oldWeight > newWeight) {
 					// Add new weight in the weight map
 					visited[neighbor[0]][neighbor[1]] = newWeight;
-					visitedNodes++;
+					visitedList.add(xy);
 					
 					// Add Euclidean distance as heuristic value
 					int hWeight = (int) (newWeight + Graph.distance(neighbor, end));
@@ -81,11 +80,5 @@ public class AStar extends Pathfinder {
 		}
 
 		return null;
-	}
-
-	private void logBenchmark() {
-		System.out.println(
-				String.format("A* shortest path found a path for %s. \n" + "Nodes visited: %s \n" + "Nodes in path: %s",
-						totalWeight, visitedNodes, nodesInPath));
 	}
 }

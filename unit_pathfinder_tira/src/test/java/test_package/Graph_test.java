@@ -18,7 +18,7 @@ class Graph_test {
 		int[] a = { 0, 0 };
 		int[] b = { 1, 0 };
 		double result = Graph.distance(a, b);
-		assertEquals(1, result, "horizontal distance ok");
+		assertEquals(1, result);
 	}
 	
 	@Test
@@ -27,7 +27,24 @@ class Graph_test {
 		int[] b = { 1, 1 };
 		double expected = Math.sqrt(2);
 		double result = Graph.distance(a, b);
-		assertEquals(expected, result, "diagonal distance ok");
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	void test_distance_negative1() {
+		int[] a = { 1, 1 };
+		int[] b = { 0, 0 };
+		double expected = Math.sqrt(2);
+		double result = Graph.distance(a, b);
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	void test_distance_negative2() {
+		int[] a = { 1, 0 };
+		int[] b = { 0, 0 };
+		double result = Graph.distance(a, b);
+		assertEquals(1, result);
 	}
 	
 	@Test

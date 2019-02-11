@@ -8,6 +8,8 @@ import graph.Graph;
 import graph.Node;
 
 public class Dijkstra extends Pathfinder {
+	boolean[][] visited;
+	
 	/**
 	 * Dijkstra's shortest path search algorithm.
 	 * 
@@ -37,7 +39,7 @@ public class Dijkstra extends Pathfinder {
 
 		// Create visited matrix where the value indicates true weight from start
 		boolean[][] visited = new boolean[height][width];
-		visitedNodes = 0;
+		visitedList = new ArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the distance
 		// from start
@@ -53,7 +55,6 @@ public class Dijkstra extends Pathfinder {
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
 				time = System.currentTimeMillis() - time;
-				logBenchmark();
 				return path;
 			}
 			// Also if visited
@@ -62,7 +63,7 @@ public class Dijkstra extends Pathfinder {
 			}
 			// Mark visited
 			visited[xy[0]][xy[1]] = true;
-			visitedNodes++;
+			visitedList.add(xy);
 
 			// Add polled node's neighbors to queue
 			for (int[] neighbor : g.neighbors(xy)) {
@@ -73,11 +74,5 @@ public class Dijkstra extends Pathfinder {
 		}
 
 		return null;
-	}
-
-	private void logBenchmark() {
-		System.out.println(String.format(
-				"Dijkstra's shortest path found a path for %s. \n" + "Nodes visited: %s \n" + "Nodes in path: %s",
-				totalWeight, visitedNodes, nodesInPath));
 	}
 }
