@@ -62,48 +62,25 @@ public class MapTools extends VBox {
 	void generateLayout() {
 		this.setPadding(new Insets(10));
 		
-		// Benchmark data
+		// Make forms
 		int numForms = titles.length;
-		int numFields = fieldTitles.length;
-		VBox[] forms = new VBox[numForms];
-		HBox[] fields = new HBox[numFields];
-		
 		for (int i = 0; i < numForms; i++) {
 			// Make a new form for each pathfinder and stack containing nodes vertically
-			forms[i] = new VBox();
-			forms[i].setMinWidth(312);
+			VBox form = new VBox();
+			form.setMinWidth(312);
 			
-			// Make a form title with a layer toggle checkbox
-			//Label title = new Label(titles[i]);
-			//title.setPadding(new Insets(2, 0, 2, 0));
-			//title.setFont(Font.font("Verdana", 14));
-			//forms[i].getChildren().add(title);
-			// Also make a check box to allow hiding of the draw layer for this pathfinder
-			CheckBox cb = layerToggle(i, titles[i]);
-			forms[i].getChildren().add(cb);
+			// Make a form title with a layer toggle check box
+			CheckBox cb = makeTitle(i, titles[i]);
+			form.getChildren().add(cb);
 			
-			// Populate fields
-			for (int j = 0; j < numFields; j++) {
-				// Make an HBox
-				fields[j] = new HBox();
-				fields[j].setPadding(new Insets(1, 5, 1, 5));
-				
-				// Divide the HBox in left and right aligned labels divided by a region
-				// Left Label
-				Label left = new Label(fieldTitles[j]);
-				// Divider
-				Region center = new Region();
-				HBox.setHgrow(center, Priority.ALWAYS);
-				// Right label
-				statTexts[i][j] = new Label(stats[i][j]);
-				
-				// Populate the form with the new fields
-				fields[j].getChildren().addAll(left, center, statTexts[i][j]);
-				forms[i].getChildren().add(fields[j]);
-			}
-			this.getChildren().add(forms[i]);
+			// Make fields on which the benchmarking results are displayed
+			HBox[] fields = makeFields(i);
+			form.getChildren().addAll(fields);
+			
+			this.getChildren().add(form);
 		}
-		// Divider with button
+		
+		// Divider
 		Region divider = new Region();
 		VBox.setVgrow(divider, Priority.ALWAYS);
 		this.getChildren().add(divider);
@@ -124,7 +101,7 @@ public class MapTools extends VBox {
 	 * @param label		Button label
 	 * @return
 	 */
-	CheckBox layerToggle(int i, String label) {
+	CheckBox makeTitle(int i, String label) {
 		CheckBox cb = new CheckBox(label);
 		// Default checked
 		cb.setIndeterminate(false);
@@ -137,5 +114,36 @@ public class MapTools extends VBox {
 			mv.toggleLayer(i, cb.selectedProperty().get());
 		});
 		return cb;
+	}
+	
+	/**
+	 * Creates rows for each string in fieldTitles and provides a field for the benchmarking results.
+	 * @param i		Index of formTitle
+	 * @return
+	 */
+	HBox[] makeFields(int i) {
+		int numFields = fieldTitles.length;
+		HBox[] fields = new HBox[numFields];
+		
+		// Populate fields
+		for (int j = 0; j < numFields; j++) {
+			// Make an HBox
+			fields[j] = new HBox();
+			fields[j].setPadding(new Insets(1, 5, 1, 5));
+			
+			// Divide the HBox in left and right aligned labels divided by a region
+			// Left Label
+			Label left = new Label(fieldTitles[j]);
+			// Divider
+			Region center = new Region();
+			HBox.setHgrow(center, Priority.ALWAYS);
+			// Right label
+			statTexts[i][j] = new Label(stats[i][j]);
+			
+			// Populate the form with the new fields
+			fields[j].getChildren().addAll(left, center, statTexts[i][j]);
+		}
+		
+		return fields;
 	}
 }

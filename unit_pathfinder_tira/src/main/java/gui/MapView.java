@@ -34,6 +34,7 @@ public class MapView extends StackPane {
 	GraphicsContext gcd = drawDijkstra.getGraphicsContext2D();
 	GraphicsContext gca = drawAStar.getGraphicsContext2D();
 	GraphicsContext gcj = drawJPS.getGraphicsContext2D();
+	boolean isSceneLocked = false;
 
 	public MapView(Image img) {
 		loadMap(img);
@@ -43,6 +44,8 @@ public class MapView extends StackPane {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				if (isSceneLocked) return;
+				isSceneLocked = true;
 				if (inputQueue(start, end, (int) event.getX(), (int) event.getY())) {
 					System.out.println(String.format("Searching path between (%o, %o) and (%o, %o). Click elsewhere to set the new end point.", start[0], start[1], end[0], end[1]));
 					ArrayList<int[]> dResult = d.search(g, start, end);
@@ -52,22 +55,33 @@ public class MapView extends StackPane {
 					// Draw paths
 					clearDrawings();
 					if (dResult != null) {
-						highlightPixels(gcd, dResult, Color.YELLOW);
+						highlightVisited(gcd, d.getVisited());
+						highlightPath(gcd, dResult, Color.YELLOW);
 					}
 					if (aResult != null) {
-						highlightPixels(gca, aResult, Color.RED);
+						highlightVisited(gca, a.getVisited());
+						highlightPath(gca, aResult, Color.RED);
 					}
 					if (jResult != null) {
-						highlightPixels(gcj, jResult, Color.MAGENTA);
+						highlightVisited(gcj, j.getVisited());
+						highlightPath(gcj, jResult, Color.MAGENTA);
 					}
 				} else {
 					System.out.println(String.format("Starting point set at (%o, %o), click elsewhere to set the end point.", end[0], end[1]));
 				}
+				isSceneLocked = false;
 			}
 		});
 	}
 	
-	// Make previous click the starting point and new click the ending point
+	/**
+	 * Make previous click the starting point and new click the ending point
+	 * @param start
+	 * @param end
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	boolean inputQueue(int[] start, int[] end, int x, int y) {
 		start[0] = end[0];
 		start[1] = end[1];
@@ -78,8 +92,33 @@ public class MapView extends StackPane {
 		return true;
 	}
 	
-	// Take the result from Dijkstra and draw a yellow line to indicate the path
-	void highlightPixels(GraphicsContext gc, ArrayList<int[]> pixels, Color color) {
+	/**
+	 * Take the visited list from Pathfinder and draw visited coordinates white
+	 * @param gc
+	 * @param pixels
+	 */
+	void highlightVisited(GraphicsContext gc, ArrayList<int[]> pixels) {
+		gc.setStroke(Color.WHITE);
+		gc.setGlobalAlpha(0.9);
+		gc.setLineWidth(1);
+		
+		for (int[] i : pixels) {
+			gc.beginPath();
+			gc.lineTo(i[0], i[1]);
+			gc.stroke();
+			gc.closePath();
+		}
+
+		gc.setGlobalAlpha(1);
+	}
+	
+	/**
+	 * Take the result from Pathfinder and draw a specified color line to indicate the path
+	 * @param gc
+	 * @param pixels
+	 * @param color
+	 */
+	void highlightPath(GraphicsContext gc, ArrayList<int[]> pixels, Color color) {
 		gc.setStroke(color);
 		gc.setLineWidth(2);
 		gc.beginPath();
