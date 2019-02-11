@@ -42,7 +42,7 @@ public class JPS extends Pathfinder {
 
 		// Reset visitedNodes for benchmarking and create visited matrix where the value indicates true weight from start
 		visited = new double[height][width];
-		visitedNodes = 0;
+		visitedList = new ArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
 		// distance to end
@@ -60,7 +60,6 @@ public class JPS extends Pathfinder {
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
 				time = System.currentTimeMillis() - time;
-				logBenchmark();
 				return path;
 			}
 
@@ -85,7 +84,6 @@ public class JPS extends Pathfinder {
 			Node s = jump(start, n, end, g);
 			if (s != null) {
 				successors.add(s);
-				visitedNodes++;
 			}
 		}
 		return successors;
@@ -159,19 +157,19 @@ public class JPS extends Pathfinder {
 		if (g.getWeight(towards) == 0) return null;
 		
 		// If goal, return new Node of 'towards'
-		if (Arrays.equals(towards, end)) return newStart(start, towards);
+		if (Arrays.equals(towards, end)) return newStart(start, towards, end);
 		
 		// If forced node is found in neighbors, return new Node of 'towards'
 		if (dir[0] != 0 && dir[1] != 0) {
 			// Check diagonally
             if ((g.getWeight(towards[0] - dir[0], towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - dir[0], towards[1]) == 0) ||
         			(g.getWeight(towards[0] + dir[0], towards[1] - dir[1]) != 0 && g.getWeight(towards[0], towards[1] - dir[1]) == 0)) {
-            	return newStart(start, towards);
+            	return newStart(start, towards, end);
             }
             // Jump horizontally and vertically
             int[] newTowardsXYLeft = {towards[0] + dir[0], towards[1] };
             int[] newTowardsXYRight = {towards[0], towards[1] + dir[1] };
-            Node nextStart = newStart(start, towards);
+            Node nextStart = newStart(start, towards, end);
             if (jump(nextStart, newTowardsXYLeft, end, g) != null ||
             		jump(nextStart, newTowardsXYRight, end, g) != null) {
             	return nextStart;
@@ -181,13 +179,13 @@ public class JPS extends Pathfinder {
             	// Check horizontally
                 if ((g.getWeight(towards[0] + dir[0], towards[1] + 1) != 0 && g.getWeight(towards[0], towards[1] + 1) == 0) ||
                 		(g.getWeight(towards[0] + dir[0], towards[1] - 1) != 0 && g.getWeight(towards[0], towards[1] - 1) == 0)) {
-                	return newStart(start, towards);
+                	return newStart(start, towards, end);
                 }
             } else {
             	// Check vertically
                 if ((g.getWeight(towards[0] + 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] + 1, towards[1]) == 0) ||
                 		(g.getWeight(towards[0] - 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - 1, towards[1]) == 0)) {
-                	return newStart(start, towards);
+                	return newStart(start, towards, end);
                 }
             }
 		}
@@ -197,20 +195,15 @@ public class JPS extends Pathfinder {
 		return jump(start, nextTowards, end, g);
 	}
 	
-	Node newStart(Node start, int[] towards) {
+	Node newStart(Node start, int[] towards, int[] end) {
 		int[] startXY = start.getXY();
 		double startWeight = visited[startXY[0]][startXY[1]];
 		double endWeight = startWeight + Graph.distance(startXY, towards);
-		double heuristicWeight = startWeight + Graph.distance(startXY, towards);
+		double heuristicWeight = endWeight + Graph.distance(towards, end);
 		
 		visited[towards[0]][towards[1]] = endWeight;
+		visitedList.add(towards);
 		Node nextStart = new Node(towards, heuristicWeight, start);
 		return nextStart;
-	}
-	
-	private void logBenchmark() {
-		System.out.println(
-				String.format("JPS shortest path found a path for %s. \n" + "Nodes visited: %s \n" + "Nodes in path: %s",
-						totalWeight, visitedNodes, nodesInPath));
 	}
 }

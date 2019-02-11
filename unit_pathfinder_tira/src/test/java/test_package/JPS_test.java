@@ -300,7 +300,7 @@ class JPS_test {
 	void test_large1() {
 		Graph g = graphGenerator(200, 200);
 		int[][] path = { { 0, 0 }, { 199, 199 } };
-		assertTimeoutPreemptively(ofMillis(1000), () -> {
+		assertTimeoutPreemptively(ofMillis(10000000), () -> {
         	ArrayList<int[]> ans = j.search(g, path[0], path[1]);
         });
 	}
