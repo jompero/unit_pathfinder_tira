@@ -46,6 +46,7 @@ public class Dijkstra extends Pathfinder {
 		while (!queue.isEmpty()) {
 			// Poll next node from queue and check if we reached the end
 			Node n = queue.poll();
+			
 			int[] xy = n.getXY();
 			if (Arrays.equals(xy, end)) {
 				ArrayList<int[]> path = n.path();

@@ -50,6 +50,7 @@ public class JPS extends Pathfinder {
 			// Poll next node from queue and check if we've reached the end
 			// else continue search
 			Node n = queue.poll();
+			visitedNodes++;
 			int[] xy = n.getXY();
 			
 			if (Arrays.equals(xy, end)) {
@@ -82,6 +83,7 @@ public class JPS extends Pathfinder {
 			Node s = jump(start, n, end, g);
 			if (s != null) {
 				successors.add(s);
+				visitedNodes++;
 			}
 		}
 		return successors;
@@ -154,26 +156,20 @@ public class JPS extends Pathfinder {
 		// If wall, return null
 		if (g.getWeight(towards) == 0) return null;
 		
-		// Create new Node for next start
-		int[] startXY = start.getXY();
-		double startWeight = start.getWeight();
-		double endWeight = startWeight + Graph.distance(startXY, towards);
-		Node nextStart = new Node(towards, endWeight, start);
-		visitedNodes++;
-		
 		// If goal, return new Node of 'towards'
-		if (Arrays.equals(towards, end)) return nextStart;
+		if (Arrays.equals(towards, end)) return newStart(start, towards);
 		
 		// If forced node is found in neighbors, return new Node of 'towards'
 		if (dir[0] != 0 && dir[1] != 0) {
 			// Check diagonally
             if ((g.getWeight(towards[0] - dir[0], towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - dir[0], towards[1]) == 0) ||
         			(g.getWeight(towards[0] + dir[0], towards[1] - dir[1]) != 0 && g.getWeight(towards[0], towards[1] - dir[1]) == 0)) {
-            	return nextStart;
+            	return newStart(start, towards);
             }
             // Jump horizontally and vertically
             int[] newTowardsXYLeft = {towards[0] + dir[0], towards[1] };
             int[] newTowardsXYRight = {towards[0], towards[1] + dir[1] };
+            Node nextStart = newStart(start, towards);
             if (jump(nextStart, newTowardsXYLeft, end, g) != null ||
             		jump(nextStart, newTowardsXYRight, end, g) != null) {
             	return nextStart;
@@ -183,20 +179,29 @@ public class JPS extends Pathfinder {
             	// Check horizontally
                 if ((g.getWeight(towards[0] + dir[0], towards[1] + 1) != 0 && g.getWeight(towards[0], towards[1] + 1) == 0) ||
                 		(g.getWeight(towards[0] + dir[0], towards[1] - 1) != 0 && g.getWeight(towards[0], towards[1] - 1) == 0)) {
-                		return nextStart;
+                	return newStart(start, towards);
                 }
             } else {
             	// Check vertically
                 if ((g.getWeight(towards[0] + 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] + 1, towards[1]) == 0) ||
                 		(g.getWeight(towards[0] - 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - 1, towards[1]) == 0)) {
-                		return nextStart;
+                	return newStart(start, towards);
                 }
             }
 		}
 		
 		// If no forced Nodes found, move towards the goal
 		int[] nextTowards = { towards[0] + dir[0], towards[1] + dir[1] };
-		return jump(nextStart, nextTowards, end, g);
+		return jump(newStart(start, towards), nextTowards, end, g);
+	}
+	
+	Node newStart(Node start, int[] towards) {
+		// Create new Node for next start
+		int[] startXY = start.getXY();
+		double startWeight = start.getWeight();
+		double endWeight = startWeight + Graph.distance(startXY, towards);
+		Node nextStart = new Node(towards, endWeight, start);
+		return nextStart;
 	}
 	
 	private void logBenchmark() {
