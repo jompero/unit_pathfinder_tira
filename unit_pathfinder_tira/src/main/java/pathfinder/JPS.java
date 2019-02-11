@@ -8,6 +8,8 @@ import graph.Graph;
 import graph.Node;
 
 public class JPS extends Pathfinder {
+	double[][] visited;
+	
 	/**
 	 * Jump-point search (JPS) shortest path search algorithm. Not fully implemented yet.
 	 * 
@@ -38,19 +40,19 @@ public class JPS extends Pathfinder {
 			return result;
 		}
 
-		// Reset visitedNodes for benchmarking
+		// Reset visitedNodes for benchmarking and create visited matrix where the value indicates true weight from start
+		visited = new double[height][width];
 		visitedNodes = 0;
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
 		// distance to end
 		PriorityQueue<Node> queue = new PriorityQueue<>();
-		queue.add(new Node(start, 0, null));
+		queue.add(new Node(start, Graph.distance(start, end), null));
 		
 		while (!queue.isEmpty()) {
 			// Poll next node from queue and check if we've reached the end
 			// else continue search
 			Node n = queue.poll();
-			visitedNodes++;
 			int[] xy = n.getXY();
 			
 			if (Arrays.equals(xy, end)) {
@@ -192,15 +194,17 @@ public class JPS extends Pathfinder {
 		
 		// If no forced Nodes found, move towards the goal
 		int[] nextTowards = { towards[0] + dir[0], towards[1] + dir[1] };
-		return jump(newStart(start, towards), nextTowards, end, g);
+		return jump(start, nextTowards, end, g);
 	}
 	
 	Node newStart(Node start, int[] towards) {
-		// Create new Node for next start
 		int[] startXY = start.getXY();
-		double startWeight = start.getWeight();
+		double startWeight = visited[startXY[0]][startXY[1]];
 		double endWeight = startWeight + Graph.distance(startXY, towards);
-		Node nextStart = new Node(towards, endWeight, start);
+		double heuristicWeight = startWeight + Graph.distance(startXY, towards);
+		
+		visited[towards[0]][towards[1]] = endWeight;
+		Node nextStart = new Node(towards, heuristicWeight, start);
 		return nextStart;
 	}
 	

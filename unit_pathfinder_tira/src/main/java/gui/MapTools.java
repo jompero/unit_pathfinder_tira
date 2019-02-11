@@ -21,7 +21,7 @@ public class MapTools extends VBox {
 	String[] titles = { dijkstraTitle, astarTitle, jpsTitle };
 	
 	String totalWeight = 	"Weight of the found path:";
-	String nodesInPath = 	"Nodes in path found:";
+	String nodesInPath = 	"Nodes in returned path:";
 	String visitedNodes =	"Nodes visited during search:";
 	String time = 			"Algorithm completed in:";
 	String[] fieldTitles = { totalWeight, nodesInPath, visitedNodes, time };
