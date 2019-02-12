@@ -2,10 +2,10 @@ package pathfinder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.PriorityQueue;
 
 import graph.Graph;
 import graph.Node;
+import mycollections.MyPriorityQueue;
 
 public class JPS extends Pathfinder {
 	double[][] visited;
@@ -46,7 +46,7 @@ public class JPS extends Pathfinder {
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
 		// distance to end
-		PriorityQueue<Node> queue = new PriorityQueue<>();
+		MyPriorityQueue<Node> queue = new MyPriorityQueue<>();
 		queue.add(new Node(start, Graph.distance(start, end), null));
 		
 		while (!queue.isEmpty()) {

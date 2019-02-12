@@ -2,10 +2,10 @@ package pathfinder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.PriorityQueue;
 
 import graph.Graph;
 import graph.Node;
+import mycollections.MyPriorityQueue;
 
 public class Dijkstra extends Pathfinder {
 	boolean[][] visited;
@@ -43,7 +43,7 @@ public class Dijkstra extends Pathfinder {
 
 		// The actual search algorithm where nodes are evaluated based on the distance
 		// from start
-		PriorityQueue<Node> queue = new PriorityQueue<>();
+		MyPriorityQueue<Node> queue = new MyPriorityQueue<>();
 		queue.add(new Node(start, 0, null));
 		while (!queue.isEmpty()) {
 			// Poll next node from queue and check if we reached the end

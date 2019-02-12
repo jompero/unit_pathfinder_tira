@@ -26,3 +26,4 @@ As per Improving Jump Point Search, Daniel Harabor and Alban Grastien, 2014, JPS
  1. http://users.cecs.anu.edu.au/~dharabor/data/papers/harabor-grastien-aaai11.pdf
  1. https://zerowidth.com/2013/05/05/jump-point-search-explained.html
  1. https://users.cecs.anu.edu.au/~dharabor/data/papers/harabor-grastien-icaps14.pdf
+ 1. http://pages.cs.wisc.edu/~vernon/cs367/notes/11.PRIORITY-Q.html#heap
