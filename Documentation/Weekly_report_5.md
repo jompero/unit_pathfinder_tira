@@ -17,6 +17,7 @@
 1. Peer review: https://github.com/StarSovu/tiralabra-kivipaperisakset/issues/1
 1. Fixed MyArrayList. I think the project is done code-wise.
 1. Moving onto code and test improvements. Got some good feedback from the peer review and from a colleague.
+1. Have to do an early return this week as I'm expecting 0h tomorrow.
 
 ## Hours
 Day | Hours
@@ -24,7 +25,7 @@ Day | Hours
 11.2 | 6 h
 12.2 | 3,5 h
 13.2 | 2 h
-14.2 | 3,5 h
-15.2 | X h
-Total | X h
-Altogether | 55.25 h
+14.2 | 5,5 h
+15.2 | 0 h
+Total | 17 h
+Altogether | 72.25 h
