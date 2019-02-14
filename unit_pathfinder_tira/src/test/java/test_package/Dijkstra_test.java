@@ -3,7 +3,6 @@ package test_package;
 import static java.time.Duration.ofMillis;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import graph.Graph;
+import mycollections.MyArrayList;
 import pathfinder.Dijkstra;
 
 class Dijkstra_test {
@@ -52,8 +52,8 @@ class Dijkstra_test {
 		Graph g = new Graph(matrix);
 		int[] start = { 0, 0 };
 		int[] end = { 0, 1 };
-		ArrayList<int[]> result = d.search(g, start, end);
-		ArrayList<int[]> expected = new ArrayList<>();
+		MyArrayList<int[]> result = d.search(g, start, end);
+		MyArrayList<int[]> expected = new MyArrayList<>();
 		expected.add(start);
 		expected.add(end);
 
@@ -78,7 +78,7 @@ class Dijkstra_test {
 		int[][] path = { { 0, 0 }, { 1, 1 }, { 2, 2 } };
 
 		// Do test
-		ArrayList<int[]> ans = d.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = d.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -96,7 +96,7 @@ class Dijkstra_test {
 		int[][] path = { { 0, 0 }, { 1, 1 }, { 2, 2 } };
 
 		// Do test
-		ArrayList<int[]> ans = d.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = d.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -107,9 +107,9 @@ class Dijkstra_test {
 	@Test
 	void test_large1() {
 		Graph g = graphGenerator(200, 200);
+		int[][] path = { { 0, 0 }, { 999, 999 } };
 		assertTimeoutPreemptively(ofMillis(1000), () -> {
-        	int[][] path = { { 0, 0 }, { 999, 999 } };
-        	ArrayList<int[]> ans = d.search(g, path[0], path[1]);
+        	MyArrayList<int[]> ans = d.search(g, path[0], path[1]);
         });
 	}
 	
@@ -117,8 +117,8 @@ class Dijkstra_test {
 	void test_large2() {
 		Graph g = graphGenerator(500, 500);
     	int[][] path = { { 499, 0 }, { 0, 499 } };
-		assertTimeoutPreemptively(ofMillis(1000), () -> {
-        	ArrayList<int[]> ans = d.search(g, path[0], path[1]);
+		assertTimeoutPreemptively(ofMillis(2000), () -> {
+        	MyArrayList<int[]> ans = d.search(g, path[0], path[1]);
         });
 	}
 	
@@ -126,8 +126,8 @@ class Dijkstra_test {
 	void test_large3() {
 		Graph g = graphGenerator(500, 500);
     	int[][] path = { { 498, 1 }, { 0, 498 } };
-		assertTimeoutPreemptively(ofMillis(1000), () -> {
-        	ArrayList<int[]> ans = d.search(g, path[0], path[1]);
+		assertTimeoutPreemptively(ofMillis(2000), () -> {
+        	MyArrayList<int[]> ans = d.search(g, path[0], path[1]);
         });
 	}
 }

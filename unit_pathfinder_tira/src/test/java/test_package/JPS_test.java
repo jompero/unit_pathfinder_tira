@@ -3,7 +3,6 @@ package test_package;
 import static org.junit.jupiter.api.Assertions.*;
 import static java.time.Duration.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import graph.Graph;
+import mycollections.MyArrayList;
 import pathfinder.JPS;
 
 class JPS_test {
@@ -41,8 +41,8 @@ class JPS_test {
 		Graph g = new Graph(matrix);
 		int[] start = { 0, 0 };
 		int[] end = { 0, 0 };
-		ArrayList<int[]> result = j.search(g, start, end);
-		ArrayList<int[]> expected = new ArrayList<>();
+		MyArrayList<int[]> result = j.search(g, start, end);
+		MyArrayList<int[]> expected = new MyArrayList<>();
 		expected.add(start);
 
 		if (result.size() != 1) {
@@ -70,7 +70,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[3]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[3]);
 
 		// Check result
 		assertEquals(null, ans, "test null");
@@ -82,8 +82,8 @@ class JPS_test {
 		Graph g = new Graph(matrix);
 		int[] start = { 0, 0 };
 		int[] end = { 0, 1 };
-		ArrayList<int[]> result = j.search(g, start, end);
-		ArrayList<int[]> expected = new ArrayList<>();
+		MyArrayList<int[]> result = j.search(g, start, end);
+		MyArrayList<int[]> expected = new MyArrayList<>();
 		expected.add(start);
 		expected.add(end);
 
@@ -112,7 +112,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -134,7 +134,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[6]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[6]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -156,7 +156,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[4]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[4]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -178,7 +178,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[4]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[4]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -200,7 +200,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[1]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[1]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -222,7 +222,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -244,7 +244,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -266,7 +266,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -288,7 +288,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -301,7 +301,7 @@ class JPS_test {
 		Graph g = graphGenerator(200, 200);
 		int[][] path = { { 0, 0 }, { 199, 199 } };
 		assertTimeoutPreemptively(ofMillis(10000000), () -> {
-        	ArrayList<int[]> ans = j.search(g, path[0], path[1]);
+        	MyArrayList<int[]> ans = j.search(g, path[0], path[1]);
         });
 	}
 	
@@ -310,7 +310,7 @@ class JPS_test {
 		Graph g = graphGenerator(1000, 1000);
     	int[][] path = { { 999, 0 }, { 0, 999 } };
 		assertTimeoutPreemptively(ofMillis(1000), () -> {
-        	ArrayList<int[]> ans = j.search(g, path[0], path[1]);
+        	MyArrayList<int[]> ans = j.search(g, path[0], path[1]);
         });
 	}
 	
@@ -319,7 +319,7 @@ class JPS_test {
 		Graph g = graphGenerator(1000, 1000);
     	int[][] path = { { 999, 1 }, { 0, 998 } };
 		assertTimeoutPreemptively(ofMillis(1000), () -> {
-        	ArrayList<int[]> ans = j.search(g, path[0], path[1]);
+        	MyArrayList<int[]> ans = j.search(g, path[0], path[1]);
         });
 	}
 	
@@ -334,7 +334,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[3]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[3]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -352,7 +352,7 @@ class JPS_test {
 		int[][] path = { { 0, 0 }, { 1, 0 }, { 2, 1 }, { 2, 2 } };
 
 		// Do test
-		ArrayList<int[]> ans = j.search(g, path[0], path[3]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[3]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -370,7 +370,7 @@ class JPS_test {
 		int[][] path = { { 2, 2 }, { 0, 0 } };
 
 		// Do test
-		ArrayList<int[]> ans = j.search(g, path[0], path[1]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[1]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -388,7 +388,7 @@ class JPS_test {
 			int[][] path = { { 2, 2 }, { 1, 1 }, { 0, 2 } };
 
 			// Do test
-			ArrayList<int[]> ans = j.search(g, path[0], path[2]);
+			MyArrayList<int[]> ans = j.search(g, path[0], path[2]);
 
 			// Check result
 			for (int i = 0; i < ans.size(); i++) {
@@ -410,7 +410,7 @@ class JPS_test {
 
 		// Do test
 		JPS j = new JPS();
-		ArrayList<int[]> ans = j.search(g, path[0], path[3]);
+		MyArrayList<int[]> ans = j.search(g, path[0], path[3]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {

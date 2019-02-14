@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import graph.Graph;
+import mycollections.MyArrayList;
 import pathfinder.AStar;
 
 import static java.time.Duration.ofMillis;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 class AStar_test {
@@ -44,7 +44,7 @@ class AStar_test {
 		int[][] path = { { 0, 0 }, { 1, 1 }, { 2, 2 } };
 
 		// Do test
-		ArrayList<int[]> ans = a.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = a.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -62,7 +62,7 @@ class AStar_test {
 		int[][] path = { { 0, 0 }, { 1, 1 }, { 2, 2 } };
 
 		// Do test
-		ArrayList<int[]> ans = a.search(g, path[0], path[2]);
+		MyArrayList<int[]> ans = a.search(g, path[0], path[2]);
 
 		// Check result
 		for (int i = 0; i < ans.size(); i++) {
@@ -75,7 +75,7 @@ class AStar_test {
 		Graph g = graphGenerator(200, 200);
 		assertTimeoutPreemptively(ofMillis(1000), () -> {
         	int[][] path = { { 0, 0 }, { 999, 999 } };
-        	ArrayList<int[]> ans = a.search(g, path[0], path[1]);
+        	MyArrayList<int[]> ans = a.search(g, path[0], path[1]);
         });
 	}
 	
@@ -84,7 +84,7 @@ class AStar_test {
 		Graph g = graphGenerator(1000, 1000);
 		assertTimeoutPreemptively(ofMillis(1000), () -> {
         	int[][] path = { { 999, 0 }, { 0, 999 } };
-        	ArrayList<int[]> ans = a.search(g, path[0], path[1]);
+        	MyArrayList<int[]> ans = a.search(g, path[0], path[1]);
         });
 	}
 	
@@ -93,7 +93,7 @@ class AStar_test {
 		Graph g = graphGenerator(1000, 1000);
 		assertTimeoutPreemptively(ofMillis(1000), () -> {
         	int[][] path = { { 999, 1 }, { 0, 998 } };
-        	ArrayList<int[]> ans = a.search(g, path[0], path[1]);
+        	MyArrayList<int[]> ans = a.search(g, path[0], path[1]);
         });
 	}
 }

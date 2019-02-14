@@ -7,8 +7,8 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.*;
 import org.junit.jupiter.api.Test;
 
 import graph.Graph;
+import mycollections.MyArrayList;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 class Graph_test {
@@ -53,12 +53,12 @@ class Graph_test {
 							{ 1, 1, 1 }, 
 							{ 1, 1, 1 } };
 		Graph g = new Graph(matrix);	
-		ArrayList<int[]> expected = new ArrayList<>();
+		MyArrayList<int[]> expected = new MyArrayList<>();
 		int[][] neighbors = { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 0, 2 }, { 1, 2 }, { 2, 1 }, { 2, 2 } };
 		for (int i = 0; i < neighbors.length; i++) {
 			expected.add(neighbors[i]);
 		}
-		ArrayList<int[]> result = g.neighbors(1, 1);
+		MyArrayList<int[]> result = g.neighbors(1, 1);
 		assertThat(result, containsInAnyOrder(neighbors));
 	}
 	
@@ -68,15 +68,13 @@ class Graph_test {
 							{ 1, 1, 1 }, 
 							{ 1, 1, 1 } };
 		Graph g = new Graph(matrix);	
-		ArrayList<int[]> expected = new ArrayList<>();
+		MyArrayList<int[]> expected = new MyArrayList<>();
 		int[][] neighbors = { { 1, 0 }, { 0, 1 }, { 1, 1 } };
 		for (int i = 0; i < neighbors.length; i++) {
 			expected.add(neighbors[i]);
 		}
-		ArrayList<int[]> result = g.neighbors(0, 0);
-		for (int[] n : result) {
-			expected.remove(n);
-		}
+		MyArrayList<int[]> result = g.neighbors(0, 0);
+
 		assertThat(result, containsInAnyOrder(neighbors));
 	}
 
