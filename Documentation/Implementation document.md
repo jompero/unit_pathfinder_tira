@@ -18,6 +18,8 @@ In worst case, JPS would find all Nodes interesting giving it a Time Complexity 
 ## Improvements
 As per Improving Jump Point Search, Daniel Harabor and Alban Grastien, 2014, JPS could be improved "from several factors to over one order of magnitude."
 
+Additionally my implementations of PriorityQueue and ArrayList could potentially use optimization as I noticed slower performance when larger lists are needed (i.e. Dijkstra slowed down a lot).
+
 ## Sources
  1. https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
  1. https://en.wikipedia.org/wiki/A%2A_search_algorithm
