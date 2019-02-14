@@ -1,17 +1,16 @@
 package pathfinder;
 
-import java.util.ArrayList;
-
 import graph.Graph;
+import mycollections.MyArrayList;
 
 public abstract class Pathfinder {
 	// Benchmarking data
 	double totalWeight = 0;
 	int nodesInPath = 0;
 	long time = 0;
-	ArrayList<int[]> visitedList;
+	MyArrayList<int[]> visitedList;
 	
-	abstract public ArrayList<int[]> search(Graph g, int[] start, int[] end);
+	abstract public MyArrayList<int[]> search(Graph g, int[] start, int[] end);
 	
 	public double getTotalWeight() {
 		return totalWeight;
@@ -30,7 +29,7 @@ public abstract class Pathfinder {
 		return time;
 	}
 	
-	public ArrayList<int[]> getVisited() {
+	public MyArrayList<int[]> getVisited() {
 		return visitedList;
 	}
 }

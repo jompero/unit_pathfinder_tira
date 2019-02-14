@@ -1,13 +1,12 @@
 package gui;
 
-import java.util.ArrayList;
-
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import mycollections.MyArrayList;
 import javafx.scene.layout.*;
 
 import graph.BitmapToMatrix;
@@ -48,9 +47,9 @@ public class MapView extends StackPane {
 				isSceneLocked = true;
 				if (inputQueue(start, end, (int) event.getX(), (int) event.getY())) {
 					System.out.println(String.format("Searching path between (%o, %o) and (%o, %o). Click elsewhere to set the new end point.", start[0], start[1], end[0], end[1]));
-					ArrayList<int[]> dResult = d.search(g, start, end);
-					ArrayList<int[]> aResult = a.search(g, start, end);
-					ArrayList<int[]> jResult = j.search(g, start, end);
+					MyArrayList<int[]> dResult = d.search(g, start, end);
+					MyArrayList<int[]> aResult = a.search(g, start, end);
+					MyArrayList<int[]> jResult = j.search(g, start, end);
 					
 					// Draw paths
 					clearDrawings();
@@ -97,7 +96,7 @@ public class MapView extends StackPane {
 	 * @param gc
 	 * @param pixels
 	 */
-	void highlightVisited(GraphicsContext gc, ArrayList<int[]> pixels) {
+	void highlightVisited(GraphicsContext gc, MyArrayList<int[]> pixels) {
 		gc.setStroke(Color.WHITE);
 		gc.setGlobalAlpha(0.9);
 		gc.setLineWidth(1);
@@ -118,7 +117,7 @@ public class MapView extends StackPane {
 	 * @param pixels
 	 * @param color
 	 */
-	void highlightPath(GraphicsContext gc, ArrayList<int[]> pixels, Color color) {
+	void highlightPath(GraphicsContext gc, MyArrayList<int[]> pixels, Color color) {
 		gc.setStroke(color);
 		gc.setLineWidth(2);
 		gc.beginPath();

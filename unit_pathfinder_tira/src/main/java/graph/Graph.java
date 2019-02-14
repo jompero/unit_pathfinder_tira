@@ -1,7 +1,12 @@
 package graph;
 
-import java.util.ArrayList;
+import mycollections.MyArrayList;
 
+/**
+ * My implementation of a graph. It uses an Integer matrix and contains various manipulations methods.
+ * @author danijompero
+ *
+ */
 public class Graph {
 	final int[][] matrix;
 	final int width, height;
@@ -24,10 +29,21 @@ public class Graph {
 		return height;
 	}
 
+	/**
+	 * Get the weight of a given coordinate.
+	 * @param v		Coordinate in int[] form were [0] is X and [1] is Y.
+	 * @return
+	 */
 	public int getWeight(int[] v) {
 		return getWeight(v[0], v[1]);
 	}
 	
+	/**
+	 * Get the weight of a given coordinate.
+	 * @param x		X coordinate
+	 * @param y		Y coordinate
+	 * @return
+	 */
 	public int getWeight(int x, int y) {
 		if (x < 0 || x >= height || y < 0 || y >= width) return 0;
 		if (matrix[x][y] > 0) return 1;
@@ -36,50 +52,42 @@ public class Graph {
 
 	/**
 	 * @param xy		Coordinates of node to be tested
-	 * @return 		Coordinates of neighboring nodes
+	 * @return 			Coordinates of neighboring nodes
 	 */
-	public ArrayList<int[]> neighbors(int[] xy) {
+	public MyArrayList<int[]> neighbors(int[] xy) {
 		return neighbors(xy[0], xy[1]);
 	}
 	
 	/**
 	 * @param x 		X coordinate of node to be tested
 	 * @param y 		Y coordinate of node to be tested
-	 * @return		Coordinates of neighboring nodes
+	 * @return			Coordinates of neighboring nodes
 	 */
-	public ArrayList<int[]> neighbors(int x, int y) {
-		ArrayList<int[]> neighbors = new ArrayList<>();
+	public MyArrayList<int[]> neighbors(int x, int y) {
+		MyArrayList<int[]> neighbors = new MyArrayList<>();
 		if (y > 0) {
-			if (getWeight(x, y - 1) > 0)
-				neighbors.add(coordinate(x, y - 1));
+			if (getWeight(x, y - 1) > 0) neighbors.add(coordinate(x, y - 1));
 			if (x > 0) {
-				if (getWeight(x - 1, y - 1) > 0)
-					neighbors.add(coordinate(x - 1, y - 1));
+				if (getWeight(x - 1, y - 1) > 0) neighbors.add(coordinate(x - 1, y - 1));
 			}
 			if (x < height - 1) {
-				if (getWeight(x + 1, y - 1) > 0)
-					neighbors.add(coordinate(x + 1, y - 1));
+				if (getWeight(x + 1, y - 1) > 0) neighbors.add(coordinate(x + 1, y - 1));
 			}
 		}
 		if (y < width - 1) {
-			if (getWeight(x, y + 1) > 0)
-				neighbors.add(coordinate(x, y + 1));
+			if (getWeight(x, y + 1) > 0) neighbors.add(coordinate(x, y + 1));
 			if (x > 0) {
-				if (getWeight(x - 1, y + 1) > 0)
-					neighbors.add(coordinate(x - 1, y + 1));
+				if (getWeight(x - 1, y + 1) > 0) neighbors.add(coordinate(x - 1, y + 1));
 			}
 			if (x < height - 1) {
-				if (getWeight(x + 1, y + 1) > 0)
-					neighbors.add(coordinate(x + 1, y + 1));
+				if (getWeight(x + 1, y + 1) > 0) neighbors.add(coordinate(x + 1, y + 1));
 			}
 		}
 		if (x > 0) {
-			if (getWeight(x - 1, y) > 0)
-				neighbors.add(coordinate(x - 1, y));
+			if (getWeight(x - 1, y) > 0) neighbors.add(coordinate(x - 1, y));
 		}
 		if (x < height - 1) {
-			if (getWeight(x + 1, y) > 0)
-				neighbors.add(coordinate(x + 1, y));
+			if (getWeight(x + 1, y) > 0) neighbors.add(coordinate(x + 1, y));
 		}
 		return neighbors;
 	}
@@ -102,6 +110,9 @@ public class Graph {
 	 * @return		Euclidean distance as Double
 	 */
 	public static double distance(int[] a, int[] b) {
+		// Null check
+		if (a == null || b == null) return 0;
+		
 		// Return Euclidean distance between the two points
 		double xDist = (b[0] - a[0]);
 		double yDist = (b[1] - a[1]);
@@ -120,5 +131,19 @@ public class Graph {
 		if (dir[0] != 0) dir[0] = dir[0]/Math.abs(dir[0]);
 		if (dir[1] != 0) dir[1] = dir[1]/Math.abs(dir[1]);
 		return dir;
+	}
+	
+	/**
+	 * Calculates the offset coordinate. Mainly implemented to improve readability of jump and prune methods.
+	 * @param origin
+	 * @param offsetX
+	 * @param offsetY
+	 * @return
+	 */
+	public static int[] offset(int[] origin, int offsetX, int offsetY) {
+		int X = origin[0] + offsetX;
+		int Y = origin[1] + offsetY;
+		int[] offset = { X, Y };
+		return offset;
 	}
 }

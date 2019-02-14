@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import graph.Graph;
 import graph.Node;
+import mycollections.MyArrayList;
 import mycollections.MyPriorityQueue;
 
 public class Dijkstra extends Pathfinder {
@@ -18,7 +19,7 @@ public class Dijkstra extends Pathfinder {
 	 * @param end 	The ending point
 	 * @return		Shortest path between start and end
 	 */
-	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
+	public MyArrayList<int[]> search(Graph g, int[] start, int[] end) {
 		// Log start time
 		time = System.currentTimeMillis();
 		
@@ -30,7 +31,7 @@ public class Dijkstra extends Pathfinder {
 
 		// Return end if same as start
 		if (Arrays.equals(start, end)) {
-			ArrayList<int[]> result = new ArrayList<>();
+			MyArrayList<int[]> result = new MyArrayList<>();
 			result.add(end);
 			nodesInPath = 1;
 			time = System.currentTimeMillis() - time;
@@ -39,7 +40,7 @@ public class Dijkstra extends Pathfinder {
 
 		// Create visited matrix where the value indicates true weight from start
 		boolean[][] visited = new boolean[height][width];
-		visitedList = new ArrayList<>();
+		visitedList = new MyArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the distance
 		// from start
@@ -51,7 +52,7 @@ public class Dijkstra extends Pathfinder {
 			
 			int[] xy = n.getXY();
 			if (Arrays.equals(xy, end)) {
-				ArrayList<int[]> path = n.path();
+				MyArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
 				time = System.currentTimeMillis() - time;

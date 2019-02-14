@@ -1,6 +1,6 @@
 package graph;
 
-import java.util.ArrayList;
+import mycollections.MyArrayList;
 
 // A node is an expert coordinate which knows its parent and can hold a weight value
 public class Node implements Comparable<Node> {
@@ -25,8 +25,8 @@ public class Node implements Comparable<Node> {
 		return weight;
 	}
 	
-	public ArrayList<int[]> path() {
-		ArrayList<int[]> path = new ArrayList<>();
+	public MyArrayList<int[]> path() {
+		MyArrayList<int[]> path = new MyArrayList<>();
 		if (parent != null) {
 			path.addAll(parent.path());
 		}

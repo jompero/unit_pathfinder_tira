@@ -1,10 +1,10 @@
 package pathfinder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import graph.Graph;
 import graph.Node;
+import mycollections.MyArrayList;
 import mycollections.MyPriorityQueue;
 
 public class JPS extends Pathfinder {
@@ -21,7 +21,7 @@ public class JPS extends Pathfinder {
 	 *            The ending point
 	 * @return
 	 */
-	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
+	public MyArrayList<int[]> search(Graph g, int[] start, int[] end) {
 		// Log start time
 		time = System.currentTimeMillis();
 		
@@ -33,7 +33,7 @@ public class JPS extends Pathfinder {
 
 		// Return end if same as start
 		if (Arrays.equals(start, end)) {
-			ArrayList<int[]> result = new ArrayList<>();
+			MyArrayList<int[]> result = new MyArrayList<>();
 			result.add(end);
 			nodesInPath = 1;
 			time = System.currentTimeMillis() - time;
@@ -42,7 +42,7 @@ public class JPS extends Pathfinder {
 
 		// Reset visitedNodes for benchmarking and create visited matrix where the value indicates true weight from start
 		visited = new double[height][width];
-		visitedList = new ArrayList<>();
+		visitedList = new MyArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
 		// distance to end
@@ -56,7 +56,7 @@ public class JPS extends Pathfinder {
 			int[] xy = n.getXY();
 			
 			if (Arrays.equals(xy, end)) {
-				ArrayList<int[]> path = n.path();
+				MyArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
 				time = System.currentTimeMillis() - time;
@@ -77,14 +77,12 @@ public class JPS extends Pathfinder {
 	 * @param end 		Ending coordinate
 	 * @return Successors (or "interesting" Nodes) to the starting node
 	 */
-	private ArrayList<Node> successors(Graph g, Node start, int[] end) {
-		ArrayList<Node> successors = new ArrayList<>();
-		ArrayList<int[]> neighbors = prune(g, start);
+	private MyArrayList<Node> successors(Graph g, Node start, int[] end) {
+		MyArrayList<Node> successors = new MyArrayList<>();
+		MyArrayList<int[]> neighbors = prune(g, start);
 		for (int[] n : neighbors) {
 			Node s = jump(start, n, end, g);
-			if (s != null) {
-				successors.add(s);
-			}
+			if (s != null) successors.add(s);
 		}
 		return successors;
 	}
@@ -94,8 +92,8 @@ public class JPS extends Pathfinder {
 	 * @param neighbors
 	 * @return
 	 */
-	private ArrayList<int[]> prune(Graph g, Node start) {
-		ArrayList<int[]> neighbors = new ArrayList<>();
+	private MyArrayList<int[]> prune(Graph g, Node start) {
+		MyArrayList<int[]> neighbors = new MyArrayList<>();
 		Node parent = start.getParent();
 		if (parent != null) {
 			// If start node has a parent, we can get direction and thus ignore some of the surrounding nodes
@@ -112,30 +110,71 @@ public class JPS extends Pathfinder {
 			
 			// If direction is diagonal
 			if (dirX != 0 && dirY != 0) {
-                if (g.getWeight(x, y + dirY) > 0) neighbors.add(Graph.coordinate(x, y + dirY));
-                if (g.getWeight(x + dirX, y) > 0) neighbors.add(Graph.coordinate(x + dirX, y));
-                if (g.getWeight(x + dirX, y + dirY) > 0) neighbors.add(Graph.coordinate(x + dirX, y + dirY));
-                // If perpendicularly blocked, add forced nodes
-                if (g.getWeight(x, y - dirY) == 0) neighbors.add(Graph.coordinate(x + dirX, y - dirY));
-                if (g.getWeight(x - dirX, y) == 0) neighbors.add(Graph.coordinate(x - dirX, y + dirY));
+				/*
+				 * startXY is current, if dir is { -1, 1 } then below diagram represents the following coordinates
+				 * left		| fLeft		| forwards
+				 * bLeft	| startXY	| fRight
+				 * ignore	| bRight	| right
+				 */
+				int[] forward = Graph.offset(startXY, dirX, dirY);
+				int[] fLeft = Graph.offset(startXY, dirX, 0);
+				int[] fRight = Graph.offset(startXY, 0, dirY);
+				int[] left = Graph.offset(startXY, dirX, -dirY);
+				int[] right = Graph.offset(startXY, -dirX, dirY);
+				int[] bLeft = Graph.offset(startXY, 0, -dirY);
+				int[] bRight = Graph.offset(startXY, -dirX, 0);
+				
+                if (g.getWeight(fRight) > 0) neighbors.add(fRight);
+                if (g.getWeight(fLeft) > 0) neighbors.add(fLeft);
+                if (g.getWeight(forward) > 0) neighbors.add(forward);
+                // If perpendicularly (right and left) blocked, add forced nodes
+                // Basically if bLeft is blocked, add left and if bRight is blocked add right
+                if (g.getWeight(bLeft) == 0) neighbors.add(left);
+                if (g.getWeight(bRight) == 0) neighbors.add(right);
             
             // If direction is vertical
 			} else if (dirX == 0) {
-                if (g.getWeight(x, y + dirY) > 0) neighbors.add(Graph.coordinate(x, y + dirY));
+				/*
+				 * startXY is current, if dir is { 0, 1 } then below diagram represents the following coordinates
+				 * ignore	| left		| fLeft
+				 * ignore	| startXY	| forward
+				 * ignore	| right		| fRight
+				 */
+				int[] forward = Graph.offset(startXY, 0, dirY);
+				int[] left = Graph.offset(startXY, -1, 0);
+				int[] right = Graph.offset(startXY, 1, 0);
+				int[] fLeft = Graph.offset(startXY, -1, dirY);
+				int[] fRight = Graph.offset(startXY, 1, dirY);
+				
+                if (g.getWeight(forward) > 0) neighbors.add(forward);
                 // If perpendicularly blocked, add forced nodes
-                if (g.getWeight(x + 1, y) == 0) neighbors.add(Graph.coordinate(x + 1, y + dirY));
-                if (g.getWeight(x - 1, y) == 0) neighbors.add(Graph.coordinate(x - 1, y + dirY));
+                // Basically if left is blocked, add fLeft and if right is blocked add fRight
+                if (g.getWeight(right) == 0) neighbors.add(fRight);
+                if (g.getWeight(left) == 0) neighbors.add(fLeft);
 			
             // If direction is horizontal
 			} else {
-                if (g.getWeight(x + dirX, y) > 0) neighbors.add(Graph.coordinate(x + dirX, y));
+				/*
+				 * startXY is current, if dir is { 1, 0 } then below diagram represents the following coordinates
+				 * ignore	| ignore	| ignore
+				 * right	| startXY	| left
+				 * fRight	| forward	| fLeft
+				 */
+				int[] forward = Graph.offset(startXY, dirX, 0);
+				int[] left = Graph.offset(startXY, 0, 1);
+				int[] right = Graph.offset(startXY, 0, -1);
+				int[] fLeft = Graph.offset(startXY, dirX, 1);
+				int[] fRight = Graph.offset(startXY, dirX, -1);
+				
+                if (g.getWeight(forward) > 0) neighbors.add(forward);
                 // If perpendicularly blocked, add forced nodes
-                if (g.getWeight(x, y + 1) == 0) neighbors.add(Graph.coordinate(x + dirX, y + 1));
-                if (g.getWeight(x, y - 1) == 0) neighbors.add(Graph.coordinate(x + dirX, y - 1));
+                // Basically if left is blocked, add fLeft and if right is blocked add fRight
+                if (g.getWeight(left) == 0) neighbors.add(fLeft);
+                if (g.getWeight(right) == 0) neighbors.add(fRight);
 			}
 			
 		} else {
-			// If no parent, just return all neighbors
+			// If no parent (i.e. we are at start), just return all neighbors
 			return g.neighbors(start.getXY());
 		}
 		return neighbors;
@@ -144,6 +183,8 @@ public class JPS extends Pathfinder {
 	/**
 	 * Method will jump Nodes in a direction and returns first successor Node.
 	 * A node is a successor if end can be reached from it or it has a forced neighbor.
+	 * A forced neighbor is a coordinate that would be normally ignored but is blocked for the neighboring path 
+	 * that otherwise would have gotten there as fast or faster.
 	 * @param start 	Starting Node
 	 * @param towards 	Coordinate towards which the method will move.
 	 * @param g 		Graph
@@ -152,6 +193,8 @@ public class JPS extends Pathfinder {
 	private Node jump(Node start, int[] towards, int[] end, Graph g) {
 		// Determine dir based on 'start -> towards' 
 		int[] dir = Graph.getNormalizedDir(start.getXY(), towards);
+		int dirX = dir[0];
+		int dirY = dir[1];
 
 		// If wall, return null
 		if (g.getWeight(towards) == 0) return null;
@@ -162,13 +205,13 @@ public class JPS extends Pathfinder {
 		// If forced node is found in neighbors, return new Node of 'towards'
 		if (dir[0] != 0 && dir[1] != 0) {
 			// Check diagonally
-            if ((g.getWeight(towards[0] - dir[0], towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - dir[0], towards[1]) == 0) ||
-        			(g.getWeight(towards[0] + dir[0], towards[1] - dir[1]) != 0 && g.getWeight(towards[0], towards[1] - dir[1]) == 0)) {
+            if ((g.getWeight(Graph.offset(towards, -dirX, dirY)) != 0 && g.getWeight(Graph.offset(towards, -dirX, 0)) == 0) ||
+        			(g.getWeight(Graph.offset(towards, dirX, -dirY)) != 0 && g.getWeight(Graph.offset(towards, 0, -dirY)) == 0)) {
             	return newStart(start, towards, end);
             }
             // Jump horizontally and vertically
-            int[] newTowardsXYLeft = {towards[0] + dir[0], towards[1] };
-            int[] newTowardsXYRight = {towards[0], towards[1] + dir[1] };
+            int[] newTowardsXYLeft = Graph.offset(towards, dirX, 0);
+            int[] newTowardsXYRight = Graph.offset(towards, 0, dirY);
             Node nextStart = newStart(start, towards, end);
             if (jump(nextStart, newTowardsXYLeft, end, g) != null ||
             		jump(nextStart, newTowardsXYRight, end, g) != null) {
@@ -177,24 +220,32 @@ public class JPS extends Pathfinder {
 		} else {
             if (dir[0] != 0) {
             	// Check horizontally
-                if ((g.getWeight(towards[0] + dir[0], towards[1] + 1) != 0 && g.getWeight(towards[0], towards[1] + 1) == 0) ||
-                		(g.getWeight(towards[0] + dir[0], towards[1] - 1) != 0 && g.getWeight(towards[0], towards[1] - 1) == 0)) {
+                if ((g.getWeight(Graph.offset(towards, dirX, 1)) != 0 && g.getWeight(Graph.offset(towards, 0, 1)) == 0) ||
+                		(g.getWeight(Graph.offset(towards, dirX, -1)) != 0 && g.getWeight(Graph.offset(towards, 0, -1)) == 0)) {
                 	return newStart(start, towards, end);
                 }
             } else {
             	// Check vertically
-                if ((g.getWeight(towards[0] + 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] + 1, towards[1]) == 0) ||
-                		(g.getWeight(towards[0] - 1, towards[1] + dir[1]) != 0 && g.getWeight(towards[0] - 1, towards[1]) == 0)) {
+                if ((g.getWeight(Graph.offset(towards, 1, dirY)) != 0 && g.getWeight(Graph.offset(towards, 1, 0)) == 0) ||
+                		(g.getWeight(Graph.offset(towards, -1, dirY)) != 0 && g.getWeight(Graph.offset(towards, -1, 0)) == 0)) {
                 	return newStart(start, towards, end);
                 }
             }
 		}
 		
 		// If no forced Nodes found, move towards the goal
-		int[] nextTowards = { towards[0] + dir[0], towards[1] + dir[1] };
+		int[] nextTowards = Graph.offset(towards, dirX, dirY);
 		return jump(start, nextTowards, end, g);
 	}
 	
+	/**
+	 * Creates a new starting for a new jump. As the same Node is used in many places, 
+	 * this could have been run once early but sometimes is not needed so it is created as late as possible.
+	 * @param start		Jump origin
+	 * @param towards	Coordinate to be checked
+	 * @param end		The goal
+	 * @return
+	 */
 	Node newStart(Node start, int[] towards, int[] end) {
 		int[] startXY = start.getXY();
 		double startWeight = visited[startXY[0]][startXY[1]];

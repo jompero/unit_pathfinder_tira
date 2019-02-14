@@ -1,10 +1,10 @@
 package pathfinder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import graph.Graph;
 import graph.Node;
+import mycollections.MyArrayList;
 import mycollections.MyPriorityQueue;
 
 public class AStar extends Pathfinder {
@@ -19,7 +19,7 @@ public class AStar extends Pathfinder {
 	 *            The ending point
 	 * @return
 	 */
-	public ArrayList<int[]> search(Graph g, int[] start, int[] end) {
+	public MyArrayList<int[]> search(Graph g, int[] start, int[] end) {
 		// Log start time
 		time = System.currentTimeMillis();
 		
@@ -31,7 +31,7 @@ public class AStar extends Pathfinder {
 
 		// Return end if same as start
 		if (Arrays.equals(start, end)) {
-			ArrayList<int[]> result = new ArrayList<>();
+			MyArrayList<int[]> result = new MyArrayList<>();
 			result.add(end);
 			nodesInPath = 1;
 			time = System.currentTimeMillis() - time;
@@ -40,7 +40,7 @@ public class AStar extends Pathfinder {
 
 		// Create visited matrix where the value indicates true weight from start
 		double[][] visited = new double[height][width];
-		visitedList = new ArrayList<>();
+		visitedList = new MyArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
 		// distance to end
@@ -54,7 +54,7 @@ public class AStar extends Pathfinder {
 			int[] xy = n.getXY();
 			
 			if (Arrays.equals(xy, end)) {
-				ArrayList<int[]> path = n.path();
+				MyArrayList<int[]> path = n.path();
 				nodesInPath = path.size();
 				totalWeight = visited[end[0]][end[1]] - 1;
 				time = System.currentTimeMillis() - time;

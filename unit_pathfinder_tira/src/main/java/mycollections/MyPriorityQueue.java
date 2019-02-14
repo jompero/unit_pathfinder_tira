@@ -1,16 +1,13 @@
 package mycollections;
 
-import java.util.ArrayList;
-
+/**
+ * My implementation of a PriorityQueue. It uses a binary tree to sort items on addition and removal.
+ * @author danijompero
+ *
+ * @param <T>
+ */
 public class MyPriorityQueue<T extends Comparable<T>> extends MyCollection<T> {
-	Object[] list = new Object[20];
 	int depth = 0;
-	
-	@Override
-	public boolean isEmpty() {
-		if (size == 0) return true;
-		return false;
-	}
 
 	@Override
 	public void add(T object) {
@@ -22,8 +19,24 @@ public class MyPriorityQueue<T extends Comparable<T>> extends MyCollection<T> {
 		rotateUp(size);
 	}
 	
+	@Override
+	public void addAll(MyArrayList<T> items) {
+		if (items.size >= list.length) resize(list.length - size + items.size + 20);
+		for (T t : items) {
+			add(t);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public T get(int index) {
+		if (index < 1 || index >= size) return null;
+		return (T) list[index];
+	}
+	
 	@SuppressWarnings("unchecked")
 	public T poll() {
+		if (size == 0) return null;
 		T polled = (T) list[1];
 		list[1] = list[size];
 		size--;
@@ -72,18 +85,6 @@ public class MyPriorityQueue<T extends Comparable<T>> extends MyCollection<T> {
 			list[i] = rightChild;
 			list[i*2+1] = parent;
 			rotateDown(i*2+1);
-		}
-	}
-	
-	private void resize() {
-		Object[] newList = new Object[size + 20];
-		System.arraycopy(list, 0, newList, 0, list.length);
-		list = newList;
-	}
-
-	public void addAll(ArrayList<T> successors) {
-		for (T t : successors) {
-			add(t);
 		}
 	}
 }
