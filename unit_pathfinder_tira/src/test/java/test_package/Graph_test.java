@@ -12,7 +12,17 @@ import mycollections.MyArrayList;
 import java.util.Arrays;
 
 class Graph_test {
-
+	
+	@Test
+	void test_matrix() {
+		int[][] matrix = { 	{ 1, 1, 1 }, 
+							{ 1, 1, 1 }, 
+							{ 1, 1, 1 } };
+		Graph g = new Graph(matrix);	
+		int[][] gMatrix = g.getMatrix();
+		if (!Arrays.equals(matrix, gMatrix)) fail("something went wrong with graph init");
+	}
+	
 	@Test
 	void test_distance_short1() {
 		int[] a = { 0, 0 };

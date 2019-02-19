@@ -110,9 +110,6 @@ public class Graph {
 	 * @return		Euclidean distance as Double
 	 */
 	public static double distance(int[] a, int[] b) {
-		// Null check
-		if (a == null || b == null) return 0;
-		
 		// Return Euclidean distance between the two points
 		double xDist = (b[0] - a[0]);
 		double yDist = (b[1] - a[1]);
@@ -126,7 +123,6 @@ public class Graph {
 	 * @return		Unit vector as integer array
 	 */
 	public static int[] getNormalizedDir(int[] a, int[] b) {
-		if (a == null || b == null) return null;
 		int[] dir = {b[0] - a[0], b[1] - a[1]};
 		if (dir[0] != 0) dir[0] = dir[0]/Math.abs(dir[0]);
 		if (dir[1] != 0) dir[1] = dir[1]/Math.abs(dir[1]);
