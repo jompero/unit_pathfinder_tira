@@ -150,20 +150,22 @@ public class MapView extends StackPane {
 	}
 
 	public void loadMap(Image img) {
-		// Set the map image as background
-		map.setImage(img);
-		// Populate children if empty
-		if (this.getChildren().isEmpty()) {
-			this.getChildren().addAll(map, drawDijkstra, drawAStar, drawJPS);
+		if (img != null) {
+			// Set the map image as background
+			map.setImage(img);
+			// Populate children if empty
+			if (this.getChildren().isEmpty()) {
+				this.getChildren().addAll(map, drawDijkstra, drawAStar, drawJPS);
+			}
+			// And clear the drawing boards and input queue
+			clearDrawings();
+			start = new int[2];
+			end[0] = -1;
+			end[1] = -1;
+					
+			// Convert selected image to a Graph
+			g = new Graph(BitmapToMatrix.convert(img));
 		}
-		// And clear the drawing boards and input queue
-		clearDrawings();
-		start = new int[2];
-		end[0] = -1;
-		end[1] = -1;
-				
-		// Convert selected image to a Graph
-		g = new Graph(BitmapToMatrix.convert(img));
 	}
 	
 	private void clearDrawings() {
