@@ -64,6 +64,10 @@ public class AStar extends Pathfinder {
 			// Check neighbors of polled node and calculate estimated distance to end
 			// and add to queue
 			for (int[] neighbor : g.neighbors(xy)) {
+				// TODO: Clean this up. We know we don't need to visit nodes more than once.
+				if (visited[neighbor[0]][neighbor[1]]>0) {
+					continue;
+				}
 				double newWeight = visited[xy[0]][xy[1]] + Graph.distance(xy, neighbor);
 				double oldWeight = visited[neighbor[0]][neighbor[1]];
 				if (oldWeight == 0 || oldWeight > newWeight) {

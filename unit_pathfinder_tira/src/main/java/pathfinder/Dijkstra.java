@@ -1,6 +1,5 @@
 package pathfinder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import graph.Graph;
@@ -68,6 +67,9 @@ public class Dijkstra extends Pathfinder {
 
 			// Add polled node's neighbors to queue
 			for (int[] neighbor : g.neighbors(xy)) {
+				if (visited[neighbor[0]][neighbor[1]]) {
+					continue;
+				}
 				// We already know that the neighbors are a unit away so we can use the Euclidean distance as weight
 				double weight = Graph.distance(xy, neighbor);
 				queue.add(new Node(neighbor, n.getWeight() + weight, n));
