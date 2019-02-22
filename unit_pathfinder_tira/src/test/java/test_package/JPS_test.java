@@ -66,7 +66,7 @@ class JPS_test {
 							{ 0, 1, 1, 0, 1, 0 }, 
 							{ 0, 0, 0, 0, 0, 0 } };
 		Graph g = new Graph(matrix);
-		int[][] path = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 3 } };
+		int[][] path = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 } };
 
 		// Do test
 		JPS j = new JPS();

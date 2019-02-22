@@ -24,22 +24,20 @@ public class AStar extends Pathfinder {
 		time = System.currentTimeMillis();
 		
 		// Ensure there is a matrix
-		int height = g.getHeight();
-		int width = g.getWidth();
-		if (height == 0 || width == 0)
+		if (matrixCheck(g)) return null;
+		
+		// Return null if one of the coordinates is wall
+		if (weightCheck(g, start, end)) {
+			resetBenchmark();
 			return null;
-
-		// Return end if same as start
-		if (Arrays.equals(start, end)) {
-			MyArrayList<int[]> result = new MyArrayList<>();
-			result.add(end);
-			nodesInPath = 1;
-			time = System.currentTimeMillis() - time;
-			return result;
 		}
 
+		// Return end if same as start
+		path = duplicateCheck(start, end);
+		if (path != null) return path;
+
 		// Create visited matrix where the value indicates true weight from start
-		double[][] visited = new double[height][width];
+		double[][] visited = new double[g.getHeight()][g.getWidth()];
 		visitedList = new MyArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
@@ -54,7 +52,7 @@ public class AStar extends Pathfinder {
 			int[] xy = n.getXY();
 			
 			if (Arrays.equals(xy, end)) {
-				MyArrayList<int[]> path = n.path();
+				path = n.path();
 				nodesInPath = path.size();
 				totalWeight = visited[end[0]][end[1]] - 1;
 				time = System.currentTimeMillis() - time;
@@ -64,10 +62,8 @@ public class AStar extends Pathfinder {
 			// Check neighbors of polled node and calculate estimated distance to end
 			// and add to queue
 			for (int[] neighbor : g.neighbors(xy)) {
-				// TODO: Clean this up. We know we don't need to visit nodes more than once.
-				if (visited[neighbor[0]][neighbor[1]]>0) {
-					continue;
-				}
+				if (visited[neighbor[0]][neighbor[1]] > 0) continue;
+				
 				double newWeight = visited[xy[0]][xy[1]] + Graph.distance(xy, neighbor);
 				double oldWeight = visited[neighbor[0]][neighbor[1]];
 				if (oldWeight == 0 || oldWeight > newWeight) {
@@ -82,7 +78,9 @@ public class AStar extends Pathfinder {
 
 			}
 		}
-
+		
+		totalWeight = 0;
+		nodesInPath = 0;
 		return null;
 	}
 }

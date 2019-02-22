@@ -43,8 +43,10 @@ public class MapView extends StackPane {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (isSceneLocked) return;
+				if (isSceneLocked) return; // Not sure if this is needed but will prevent clicking elsewhere before paths are calculated
 				isSceneLocked = true;
+				
+				clearDrawings();
 				if (inputQueue(start, end, (int) event.getX(), (int) event.getY())) {
 					System.out.println(String.format("Searching path between (%o, %o) and (%o, %o). Click elsewhere to set the new end point.", start[0], start[1], end[0], end[1]));
 					MyArrayList<int[]> dResult = d.search(g, start, end);
@@ -52,7 +54,6 @@ public class MapView extends StackPane {
 					MyArrayList<int[]> jResult = j.search(g, start, end);
 					
 					// Draw paths
-					clearDrawings();
 					if (dResult != null) {
 						highlightVisited(gcd, d.getVisited());
 						highlightPath(gcd, dResult, Color.YELLOW);
@@ -176,5 +177,13 @@ public class MapView extends StackPane {
 
 	public void toggleLayer(int i, Boolean state) {
 		getChildren().get(i+1).setVisible(state);;
+	}
+	
+	public int[] getStart() {
+		return start;
+	}
+	
+	public int[] getEnd() {
+		return end;
 	}
 }

@@ -26,22 +26,20 @@ public class JPS extends Pathfinder {
 		time = System.currentTimeMillis();
 		
 		// Ensure there is a matrix
-		int height = g.getHeight();
-		int width = g.getWidth();
-		if (height == 0 || width == 0)
+		if (matrixCheck(g)) return null;
+		
+		// Return null if one of the coordinates is wall
+		if (weightCheck(g, start, end)) {
+			resetBenchmark();
 			return null;
-
-		// Return end if same as start
-		if (Arrays.equals(start, end)) {
-			MyArrayList<int[]> result = new MyArrayList<>();
-			result.add(end);
-			nodesInPath = 1;
-			time = System.currentTimeMillis() - time;
-			return result;
 		}
 
+		// Return end if same as start
+		path = duplicateCheck(start, end);
+		if (path != null) return path;
+
 		// Reset visitedNodes for benchmarking and create visited matrix where the value indicates true weight from start
-		visited = new double[height][width];
+		visited = new double[g.getHeight()][g.getWidth()];
 		visitedList = new MyArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
@@ -56,7 +54,7 @@ public class JPS extends Pathfinder {
 			int[] xy = n.getXY();
 			
 			if (Arrays.equals(xy, end)) {
-				MyArrayList<int[]> path = n.path();
+				path = n.path();
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
 				time = System.currentTimeMillis() - time;
@@ -66,7 +64,9 @@ public class JPS extends Pathfinder {
 			// Check neighbors of polled node and add all successors to the queue
 			queue.addAll(successors(g, n, end));
 		}
-
+		
+		totalWeight = 0;
+		nodesInPath = 0;
 		return null;
 	}
 	
@@ -81,7 +81,8 @@ public class JPS extends Pathfinder {
 		MyArrayList<Node> successors = new MyArrayList<>();
 		MyArrayList<int[]> neighbors = prune(g, start);
 		for (int[] n : neighbors) {
-			Node s = jump(start, n, end, g);
+			Node s = null;
+			s = jump(start, n, end, g);
 			if (s != null) successors.add(s);
 		}
 		return successors;
@@ -92,16 +93,13 @@ public class JPS extends Pathfinder {
 	 * @param neighbors
 	 * @return
 	 */
-	private MyArrayList<int[]> prune(Graph g, Node start) {
+	private MyArrayList<int[]> prune(Graph g, Node start) {				
 		MyArrayList<int[]> neighbors = new MyArrayList<>();
 		Node parent = start.getParent();
 		if (parent != null) {
 			// If start node has a parent, we can get direction and thus ignore some of the surrounding nodes
 			int[] parentXY = parent.getXY();
 			int[] startXY = start.getXY();
-			// For easier reading:
-			int x = startXY[0];
-			int y = startXY[1];
 			
 			// Get normalized direction parent -> start
 			int dir[] = Graph.getNormalizedDir(parentXY, startXY);
@@ -129,8 +127,8 @@ public class JPS extends Pathfinder {
                 if (g.getWeight(forward) > 0) neighbors.add(forward);
                 // If perpendicularly (right and left) blocked, add forced nodes
                 // Basically if bLeft is blocked, add left and if bRight is blocked add right
-                if (g.getWeight(bLeft) == 0) neighbors.add(left);
-                if (g.getWeight(bRight) == 0) neighbors.add(right);
+                if (g.getWeight(bLeft) == 0 && g.getWeight(left) > 0) neighbors.add(left);
+                if (g.getWeight(bRight) == 0 && g.getWeight(right) > 0) neighbors.add(right);
             
             // If direction is vertical
 			} else if (dirX == 0) {
@@ -149,8 +147,8 @@ public class JPS extends Pathfinder {
                 if (g.getWeight(forward) > 0) neighbors.add(forward);
                 // If perpendicularly blocked, add forced nodes
                 // Basically if left is blocked, add fLeft and if right is blocked add fRight
-                if (g.getWeight(right) == 0) neighbors.add(fRight);
-                if (g.getWeight(left) == 0) neighbors.add(fLeft);
+                if (g.getWeight(right) == 0 && g.getWeight(fRight) > 0) neighbors.add(fRight);
+                if (g.getWeight(left) == 0 && g.getWeight(fLeft) > 0) neighbors.add(fLeft);
 			
             // If direction is horizontal
 			} else {
@@ -169,8 +167,8 @@ public class JPS extends Pathfinder {
                 if (g.getWeight(forward) > 0) neighbors.add(forward);
                 // If perpendicularly blocked, add forced nodes
                 // Basically if left is blocked, add fLeft and if right is blocked add fRight
-                if (g.getWeight(left) == 0) neighbors.add(fLeft);
-                if (g.getWeight(right) == 0) neighbors.add(fRight);
+                if (g.getWeight(left) == 0 && g.getWeight(fLeft) > 0) neighbors.add(fLeft);
+                if (g.getWeight(right) == 0 && g.getWeight(fRight) > 0) neighbors.add(fRight);
 			}
 			
 		} else {
@@ -191,6 +189,9 @@ public class JPS extends Pathfinder {
 	 * @return Successor Node 
 	 */
 	private Node jump(Node start, int[] towards, int[] end, Graph g) {
+		// TODO: Add visited check somewhere relevant
+		// if (visited[n[0]][n[1]] == 0) 
+		
 		// Determine dir based on 'start -> towards' 
 		int[] dir = Graph.getNormalizedDir(start.getXY(), towards);
 		int dirX = dir[0];

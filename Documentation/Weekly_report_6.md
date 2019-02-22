@@ -13,7 +13,11 @@
 1. Peer review 2 started.
 
 ## 21.2
-1. Peer review 2 continued and returned.
+1. Peer review 2 continued and returned
+
+## 22.2
+1. Improvements based on Peer review 2.
+1. Trying to fix JPS issue where it hangs when there is no path between start and end.
 
 ## Hours
 Day | Hours
@@ -21,6 +25,7 @@ Day | Hours
 18.2 | 2 h
 19.2 | 2 h
 20.2 | 4 h
-20.2 | 2 h
-Total | X h
-Altogether | 72.25 h
+21.2 | 2 h
+22.2 | 4 h
+Total | 14 h
+Altogether | 86.25 h

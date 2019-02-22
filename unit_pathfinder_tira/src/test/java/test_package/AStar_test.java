@@ -8,6 +8,7 @@ import mycollections.MyArrayList;
 import pathfinder.AStar;
 
 import static java.time.Duration.ofMillis;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 import java.util.Random;
@@ -95,5 +96,25 @@ class AStar_test {
         	int[][] path = { { 999, 1 }, { 0, 998 } };
         	MyArrayList<int[]> ans = a.search(g, path[0], path[1]);
         });
+	}
+	
+	@Test
+	void test_null() {
+		// Test setup
+		int[][] matrix = { 	{ 0, 0, 0, 0, 0, 0 }, 
+							{ 0, 1, 1, 1, 1, 0 }, 
+							{ 0, 1, 1, 1, 1, 0 }, 
+							{ 0, 1, 1, 0, 0, 0 }, 
+							{ 0, 1, 1, 0, 1, 0 }, 
+							{ 0, 0, 0, 0, 0, 0 } };
+		Graph g = new Graph(matrix);
+		int[][] path = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 } };
+
+		// Do test
+		AStar a = new AStar();
+		MyArrayList<int[]> ans = a.search(g, path[0], path[3]);
+
+		// Check result
+		assertEquals(null, ans, "test null");
 	}
 }

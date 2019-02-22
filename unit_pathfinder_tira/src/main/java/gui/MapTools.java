@@ -2,6 +2,9 @@ package gui;
 
 import javafx.stage.Stage;
 import javafx.scene.*;
+
+import java.util.Arrays;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +17,16 @@ import javafx.scene.control.CheckBox;
 
 public class MapTools extends VBox {
 	MapView mv;
+	
+	String infoText = "Clicking on the map will queue the coordinates for the pathfinders.";
+	String startText;
+	String endText;
+	String nullQueueText1 = "Coordinates: < Click somewhere to set the start point. >";
+	String nullQueueText2 = "Coordinates: < Click somewhere to set the end point. >";
+	String inputQueueText = "Coordinates: %s, %s";
+	// This label will cycle the above queue texts
+	Label inputQueue;
+	int clicks = 0;
 	
 	String dijkstraTitle = 	"Dijkstra";
 	String astarTitle = 	"A*";
@@ -45,6 +58,13 @@ public class MapTools extends VBox {
 		root.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				clicks++;
+				if (clicks == 1) {
+					inputQueue.setText(nullQueueText2);
+				} else {
+					inputQueue.setText(String.format(inputQueueText, Arrays.toString(mv.getStart()),Arrays.toString(mv.getEnd())));
+				}
+				
 				stats = mv.getBenchmark();
 				for (int i = 0; i < statTexts.length; i++) {
 					for (int j = 0; j < statTexts[0].length; j++) {
@@ -57,10 +77,17 @@ public class MapTools extends VBox {
 	
 	/**
 	 * This method will generate the layout for the benchmarking data using labels.
-	 * All children are laid out vertically starting with Benchmark data, then buttons.
+	 * All children are laid out vertically starting with instructions, 
+	 * then Benchmark data, then buttons.
 	 */
 	void generateLayout() {
 		this.setPadding(new Insets(10));
+		
+		// Give instructions
+		Label info = new Label(infoText);
+		inputQueue = new Label(nullQueueText1);
+		inputQueue.setPadding(new Insets(0, 0, 20, 0));
+		this.getChildren().addAll(info, inputQueue);
 		
 		// Make forms
 		int numForms = titles.length;

@@ -1,6 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
+apply plugin: 'application'
+
+application {
+    mainClassName = 'unit_pathfinder_tira.Main'
+}
 
 repositories {
     mavenCentral()

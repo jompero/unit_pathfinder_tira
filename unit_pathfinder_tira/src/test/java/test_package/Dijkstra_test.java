@@ -33,18 +33,6 @@ class Dijkstra_test {
 		Graph g = new Graph(matrix);
 		return g;
 	}
-	
-	@Test
-	void invalid_argument_test() {
-		int[][] matrix = { { 1, 1 }, { 1, 1 } };
-		Graph g = new Graph(matrix);
-		int[] start = { 2, 0 };
-		int[] end = { 0, 0 };
-
-		assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-			d.search(g, start, end);
-		});
-	}
 
 	@Test
 	void small_test() {
@@ -129,5 +117,25 @@ class Dijkstra_test {
 		assertTimeoutPreemptively(ofMillis(2000), () -> {
         	MyArrayList<int[]> ans = d.search(g, path[0], path[1]);
         });
+	}
+	
+	@Test
+	void test_null() {
+		// Test setup
+		int[][] matrix = { 	{ 0, 0, 0, 0, 0, 0 }, 
+							{ 0, 1, 1, 1, 1, 0 }, 
+							{ 0, 1, 1, 1, 1, 0 }, 
+							{ 0, 1, 1, 0, 0, 0 }, 
+							{ 0, 1, 1, 0, 1, 0 }, 
+							{ 0, 0, 0, 0, 0, 0 } };
+		Graph g = new Graph(matrix);
+		int[][] path = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 } };
+
+		// Do test
+		Dijkstra d = new Dijkstra();
+		MyArrayList<int[]> ans = d.search(g, path[0], path[3]);
+
+		// Check result
+		assertEquals(null, ans, "test null");
 	}
 }

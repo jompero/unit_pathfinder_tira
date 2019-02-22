@@ -127,4 +127,6 @@ class Graph_test {
 		int[] expected = { -1, 1 };
 		if (!Arrays.equals(expected, Graph.getNormalizedDir(a, b))) fail("unit vector upright wrong");
 	}
+	
+	// TODO: Null neighbor test
 }

@@ -23,22 +23,20 @@ public class Dijkstra extends Pathfinder {
 		time = System.currentTimeMillis();
 		
 		// Ensure there is a matrix
-		int height = g.getHeight();
-		int width = g.getWidth();
-		if (height == 0 || width == 0)
+		if (matrixCheck(g)) return null;
+		
+		// Return null if one of the coordinates is wall
+		if (weightCheck(g, start, end)) {
+			resetBenchmark();
 			return null;
-
-		// Return end if same as start
-		if (Arrays.equals(start, end)) {
-			MyArrayList<int[]> result = new MyArrayList<>();
-			result.add(end);
-			nodesInPath = 1;
-			time = System.currentTimeMillis() - time;
-			return result;
 		}
+		
+		// Return end if same as start
+		path = duplicateCheck(start, end);
+		if (path != null) return path;
 
 		// Create visited matrix where the value indicates true weight from start
-		boolean[][] visited = new boolean[height][width];
+		boolean[][] visited = new boolean[g.getHeight()][g.getWidth()];
 		visitedList = new MyArrayList<>();
 
 		// The actual search algorithm where nodes are evaluated based on the distance
@@ -51,7 +49,7 @@ public class Dijkstra extends Pathfinder {
 			
 			int[] xy = n.getXY();
 			if (Arrays.equals(xy, end)) {
-				MyArrayList<int[]> path = n.path();
+				path = n.path();
 				nodesInPath = path.size();
 				totalWeight = n.getWeight();
 				time = System.currentTimeMillis() - time;
@@ -76,6 +74,8 @@ public class Dijkstra extends Pathfinder {
 			}
 		}
 
+		totalWeight = 0;
+		nodesInPath = 0;
 		return null;
 	}
 }
