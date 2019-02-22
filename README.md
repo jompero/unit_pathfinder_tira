@@ -12,4 +12,4 @@ An Eclipse project set out to benchmark Dijkstra, A* and JPS in terms of finding
 * [Weekly report 3](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Weekly_report_3.md)
 * [Weekly report 4](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Weekly_report_4.md)
 * [Weekly report 5](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Weekly_report_5.md)
-* [Weekly report 5](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Weekly_report_6.md)
+* [Weekly report 6](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Weekly_report_6.md)
