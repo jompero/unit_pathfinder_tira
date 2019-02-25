@@ -9,6 +9,7 @@ import mycollections.MyPriorityQueue;
 
 public class JPS extends Pathfinder {
 	double[][] visited;
+	boolean[][] checked;
 	
 	/**
 	 * Jump-point search (JPS) shortest path search algorithm. Not fully implemented yet.
@@ -39,8 +40,12 @@ public class JPS extends Pathfinder {
 		if (path != null) return path;
 
 		// Reset visitedNodes for benchmarking and create visited matrix where the value indicates true weight from start
-		visited = new double[g.getHeight()][g.getWidth()];
+		int height = g.getHeight();
+		int width = g.getWidth();
+		
+		visited = new double[height][width];
 		visitedList = new MyArrayList<>();
+		checked = new boolean[height][width];
 
 		// The actual search algorithm where nodes are evaluated based on the estimated
 		// distance to end
@@ -52,6 +57,12 @@ public class JPS extends Pathfinder {
 			// else continue search
 			Node n = queue.poll();
 			int[] xy = n.getXY();
+			
+			if (checked[xy[0]][xy[1]]) {
+				continue;
+			} else {
+				checked[xy[0]][xy[1]] = true;
+			}
 			
 			if (Arrays.equals(xy, end)) {
 				path = n.path();
@@ -189,9 +200,6 @@ public class JPS extends Pathfinder {
 	 * @return Successor Node 
 	 */
 	private Node jump(Node start, int[] towards, int[] end, Graph g) {
-		// TODO: Add visited check somewhere relevant
-		// if (visited[n[0]][n[1]] == 0) 
-		
 		// Determine dir based on 'start -> towards' 
 		int[] dir = Graph.getNormalizedDir(start.getXY(), towards);
 		int dirX = dir[0];

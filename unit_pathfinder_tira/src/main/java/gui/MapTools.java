@@ -113,11 +113,13 @@ public class MapTools extends VBox {
 		this.getChildren().add(divider);
 		
 		// Button to load a new map including the event that triggers on action
-		Button loadMapButton = new Button("Load New Map");
+		Button loadMapButton = new Button("Load New Maps");
 		loadMapButton.setOnAction(click -> {
 			Stage stage = (Stage) this.getScene().getWindow();
 			Image img = ImageLoader.trigger(stage);
 			mv.loadMap(img);
+			inputQueue.setText(nullQueueText1);
+			clicks = 0;
 		});
 		this.getChildren().add(loadMapButton);
 	}

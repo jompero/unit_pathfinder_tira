@@ -22,7 +22,7 @@ public class Main extends Application {
 		BorderPane root = new BorderPane();
 		
 		// Setup a scene for the map with a default image
-		Image img = new Image(getClass().getClassLoader().getResourceAsStream("maps/wc3maps512-png/battleground.png"), 512, 512, false, false);
+		Image img = new Image(getClass().getClassLoader().getResourceAsStream("maps/duskwood.png"), 512, 512, false, false);
 		MapView map = new MapView(img);
 		
 		// Generate tools scene for the map
