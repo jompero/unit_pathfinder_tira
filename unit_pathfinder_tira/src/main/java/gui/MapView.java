@@ -56,7 +56,7 @@ public class MapView extends StackPane {
 					// Draw paths
 					if (dResult != null) {
 						highlightVisited(gcd, d.getVisited());
-						highlightPath(gcd, dResult, Color.YELLOW);
+						highlightPath(gcd, dResult, Color.BLUE);
 					}
 					if (aResult != null) {
 						highlightVisited(gca, a.getVisited());
@@ -98,7 +98,7 @@ public class MapView extends StackPane {
 	 * @param pixels
 	 */
 	void highlightVisited(GraphicsContext gc, MyArrayList<int[]> pixels) {
-		gc.setStroke(Color.WHITE);
+		gc.setStroke(Color.AQUA);
 		gc.setGlobalAlpha(0.9);
 		gc.setLineWidth(1);
 		
