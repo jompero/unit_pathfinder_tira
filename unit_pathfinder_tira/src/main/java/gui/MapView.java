@@ -139,12 +139,11 @@ public class MapView extends StackPane {
 			String nodesInPath = Integer.toString(pathfinders[i].getNodesInPath());
 			String visitedNodes = Integer.toString(pathfinders[i].getVisitedNodes());
 			Long time = pathfinders[i].getTime();
-			String timeInMilliseconds = String.format("%o ms", time);
 			
 			stats[i][0] = totalWeight;
 			stats[i][1] = nodesInPath;
 			stats[i][2] = visitedNodes;
-			stats[i][3] = timeInMilliseconds;
+			stats[i][3] = time.toString();
 			
 		}
 		return stats;

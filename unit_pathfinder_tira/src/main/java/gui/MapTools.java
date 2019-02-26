@@ -3,6 +3,9 @@ package gui;
 import javafx.stage.Stage;
 import javafx.scene.*;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.Arrays;
 
 import javafx.event.EventHandler;
@@ -36,7 +39,7 @@ public class MapTools extends VBox {
 	String totalWeight = 	"Weight of the found path:";
 	String nodesInPath = 	"Nodes in returned path:";
 	String visitedNodes =	"Nodes visited during search:";
-	String time = 			"Algorithm completed in:";
+	String time = 			"Algorithm completed in (ms):";
 	String[] fieldTitles = { totalWeight, nodesInPath, visitedNodes, time };
 	
 	String[] dStats = new String[4];
@@ -107,6 +110,13 @@ public class MapTools extends VBox {
 			this.getChildren().add(form);
 		}
 		
+		// Button to copy benchmarking data to clipboard
+		Button copyButton = new Button("Copy data");
+		copyButton.setOnAction(click -> {
+			copyToClipboard();
+		});
+		this.getChildren().add(copyButton);
+		
 		// Divider
 		Region divider = new Region();
 		VBox.setVgrow(divider, Priority.ALWAYS);
@@ -174,5 +184,29 @@ public class MapTools extends VBox {
 		}
 		
 		return fields;
+	}
+	
+	void copyToClipboard() {
+		String data = "";
+		data += String.format("Coordinates\t%s\t%s\n", Arrays.toString(mv.getStart()),Arrays.toString(mv.getEnd()));
+		data += String.format("Pathfinder\t%s\t%s\t%s\n", dijkstraTitle, astarTitle, jpsTitle);
+		for (int i = 0; i < 4; i++) {
+			String row;
+			switch (i) {
+				case 0: row = "Weight";
+					break;
+				case 1: row = "Length";
+					break;
+				case 2: row = "Visited";
+					break;
+				default: row = "Time";
+					break;
+			}
+			data += String.format("%s\t%s\t%s\t%s\n", row, statTexts[0][i].getText(), statTexts[1][i].getText(), statTexts[2][i].getText());
+		}
+		
+		StringSelection stringSelection = new StringSelection(data);
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(stringSelection, null);
 	}
 }
