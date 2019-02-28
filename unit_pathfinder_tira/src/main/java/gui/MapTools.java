@@ -56,7 +56,7 @@ public class MapTools extends VBox {
 	Label[] jStatsText = new Label[4];
 	Label[][] statTexts = { dStatsText, aStatsText, jStatsText };
 	
-	String copyDataIcon = "\uD83D\uDDB9";
+	String copyDataIcon = "Copy"; // Couldn't find a proper Unicode icon :(
 	String mapButtonText = "Load New Map";
 	
 	public MapTools(Node root, MapView map) {
