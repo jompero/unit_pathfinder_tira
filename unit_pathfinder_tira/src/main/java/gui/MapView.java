@@ -1,6 +1,5 @@
 package gui;
 
-import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
@@ -38,40 +37,45 @@ public class MapView extends StackPane {
 	public MapView(Image img) {
 		loadMap(img);
 		
-		// On click, queue the coordinate and run Dijkstra if 2 valid coordinates have
-		// been clicked in a row
-		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (isSceneLocked) return; // Not sure if this is needed but will prevent clicking elsewhere before paths are calculated
-				isSceneLocked = true;
-				
-				clearDrawings();
-				if (inputQueue(start, end, (int) event.getX(), (int) event.getY())) {
-					System.out.println(String.format("Searching path between (%o, %o) and (%o, %o). Click elsewhere to set the new end point.", start[0], start[1], end[0], end[1]));
-					MyArrayList<int[]> dResult = d.search(g, start, end);
-					MyArrayList<int[]> aResult = a.search(g, start, end);
-					MyArrayList<int[]> jResult = j.search(g, start, end);
-					
-					// Draw paths
-					if (dResult != null) {
-						highlightVisited(gcd, d.getVisited());
-						highlightPath(gcd, dResult, Color.BLUE);
-					}
-					if (aResult != null) {
-						highlightVisited(gca, a.getVisited());
-						highlightPath(gca, aResult, Color.RED);
-					}
-					if (jResult != null) {
-						highlightVisited(gcj, j.getVisited());
-						highlightPath(gcj, jResult, Color.MAGENTA);
-					}
-				} else {
-					System.out.println(String.format("Starting point set at (%o, %o), click elsewhere to set the end point.", end[0], end[1]));
-				}
-				isSceneLocked = false;
-			}
+		this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			handeMouseClick(event);
 		});
+	}
+	
+	/**
+	 * Handler for a mouse click.
+	 * On click, queue the coordinate and run pathfinders if 2 valid coordinates have
+	 * been clicked in a row.
+	 * @param event
+	 */
+	void handeMouseClick(MouseEvent event) {
+		if (isSceneLocked) return; // Not sure if this is needed but will prevent clicking elsewhere before paths are calculated
+		isSceneLocked = true;
+		
+		clearDrawings();
+		if (inputQueue(start, end, (int) event.getX(), (int) event.getY())) {
+			System.out.println(String.format("Searching path between (%o, %o) and (%o, %o). Click elsewhere to set the new end point.", start[0], start[1], end[0], end[1]));
+			MyArrayList<int[]> dResult = d.search(g, start, end);
+			MyArrayList<int[]> aResult = a.search(g, start, end);
+			MyArrayList<int[]> jResult = j.search(g, start, end);
+			
+			// Draw paths
+			if (dResult != null) {
+				highlightVisited(gcd, d.getVisited());
+				highlightPath(gcd, dResult, Color.BLUE);
+			}
+			if (aResult != null) {
+				highlightVisited(gca, a.getVisited());
+				highlightPath(gca, aResult, Color.RED);
+			}
+			if (jResult != null) {
+				highlightVisited(gcj, j.getVisited());
+				highlightPath(gcj, jResult, Color.MAGENTA);
+			}
+		} else {
+			System.out.println(String.format("Starting point set at (%o, %o), click elsewhere to set the end point.", end[0], end[1]));
+		}
+		isSceneLocked = false;
 	}
 	
 	/**
