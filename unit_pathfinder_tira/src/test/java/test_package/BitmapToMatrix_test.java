@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import graph.BitmapToMatrix;
 
 class BitmapToMatrix_test {
+	
+	//new Image(getClass().getClassLoader().getResourceAsStream("maps/duskwood.png"), 512, 512, false, false);
 
 	@Test
 	void test_black() {
@@ -23,7 +25,7 @@ class BitmapToMatrix_test {
 							{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 
 							{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-		Image img = new Image(getClass().getResourceAsStream("debugblack.bmp"));
+		Image img = new Image(getClass().getClassLoader().getResourceAsStream("debugblack.bmp"));
 
 		int[][] result = BitmapToMatrix.convert(img);
 		if (result.length != matrix.length && result[0].length != matrix[0].length) {
@@ -50,7 +52,7 @@ class BitmapToMatrix_test {
 							{ 0, 0, 255, 0, 0, 0, 0, 0, 0, 0 }, 
 							{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-		Image img = new Image(getClass().getResourceAsStream("debugdirection.bmp"));
+		Image img = new Image(getClass().getClassLoader().getResourceAsStream("debugdirection.bmp"));
 
 		int[][] result = BitmapToMatrix.convert(img);
 		if (result.length != matrix.length && result[0].length != matrix[0].length) {
@@ -77,7 +79,7 @@ class BitmapToMatrix_test {
 							{ 0, 9, 9, 9, 9, 9, 9, 9, 9, 0 }, 
 							{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-		Image img = new Image(getClass().getResourceAsStream("debugsquare.bmp"));
+		Image img = new Image(getClass().getClassLoader().getResourceAsStream("debugsquare.bmp"));
 
 		int[][] result = BitmapToMatrix.convert(img);
 		if (result.length != matrix.length && result[0].length != matrix[0].length) {
