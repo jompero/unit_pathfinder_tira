@@ -1,6 +1,4 @@
 language: java
-script:
-  - cd unit_pathfinder_tira
-  - ./gradlew jacocoTestReport
+sudo: false
 after_success:
   - bash <(curl -s https://codecov.io/bash)
