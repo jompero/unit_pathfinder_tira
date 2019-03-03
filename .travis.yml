@@ -3,4 +3,5 @@ script:
   - cd unit_pathfinder_tira
   - ./gradlew jacocoTestReport
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - cd unit_pathfinder_tira
+  - bash <(curl -s https://codecov.io/bash) -X gcov
