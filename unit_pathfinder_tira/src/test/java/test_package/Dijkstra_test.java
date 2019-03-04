@@ -95,7 +95,7 @@ class Dijkstra_test {
 	@Test
 	void test_large1() {
 		Graph g = graphGenerator(200, 200);
-		int[][] path = { { 0, 0 }, { 999, 999 } };
+		int[][] path = { { 0, 0 }, { 199, 199 } };
 		assertTimeoutPreemptively(ofMillis(1000), () -> {
         	MyArrayList<int[]> ans = d.search(g, path[0], path[1]);
         });
@@ -103,18 +103,18 @@ class Dijkstra_test {
 	
 	@Test
 	void test_large2() {
-		Graph g = graphGenerator(500, 500);
-    	int[][] path = { { 499, 0 }, { 0, 499 } };
-		assertTimeoutPreemptively(ofMillis(2000), () -> {
+		Graph g = graphGenerator(200, 200);
+    	int[][] path = { { 199, 0 }, { 0, 199 } };
+		assertTimeoutPreemptively(ofMillis(1000), () -> {
         	MyArrayList<int[]> ans = d.search(g, path[0], path[1]);
         });
 	}
 	
 	@Test
 	void test_large3() {
-		Graph g = graphGenerator(500, 500);
-    	int[][] path = { { 498, 1 }, { 0, 498 } };
-		assertTimeoutPreemptively(ofMillis(2000), () -> {
+		Graph g = graphGenerator(200, 200);
+    	int[][] path = { { 198, 1 }, { 0, 198 } };
+		assertTimeoutPreemptively(ofMillis(1000), () -> {
         	MyArrayList<int[]> ans = d.search(g, path[0], path[1]);
         });
 	}
