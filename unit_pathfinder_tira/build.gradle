@@ -38,8 +38,8 @@ test {
     useJUnitPlatform()
 }
 
-coveralls {
-    jacocoReportPath 'build/reports/jacoco/test/jacocoTestReport.xml'
-}
-
 check.dependsOn jacocoTestReport
+
+coveralls {
+    jacocoReportPath 'unit_pathfinder_tira/build/reports/jacoco/test/jacocoTestReport.xml'
+}
