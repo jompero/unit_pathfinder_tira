@@ -41,5 +41,6 @@ test {
 check.dependsOn jacocoTestReport
 
 coveralls {
-    jacocoReportPath 'unit_pathfinder_tira/build/reports/jacoco/test/jacocoTestReport.xml'
+    jacocoReportPath 'build/jacoco/test/jacocoTestReport.xml'
 }
+
