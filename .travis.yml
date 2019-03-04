@@ -3,6 +3,6 @@ jdk:
   - oraclejdk8
 script:
   - cd unit_pathfinder_tira
-  - ./gradlew jacocoTestReport
+  - ./gradlew test jacocoTestReport
 after_success:
-  - ./gradlew jacocoTestReport coveralls
+  - ./gradlew test jacocoTestReport coveralls
