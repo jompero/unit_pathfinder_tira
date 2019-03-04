@@ -1,4 +1,6 @@
 # Testing document
+[![Build Status](https://travis-ci.org/jompero/unit_pathfinder_tira.svg?branch=master)](https://travis-ci.org/jompero/unit_pathfinder_tira)
+[![Coverage Status](https://coveralls.io/repos/github/jompero/unit_pathfinder_tira/badge.svg?branch=master)](https://coveralls.io/github/jompero/unit_pathfinder_tira?branch=master)
 
 ## Benchmarking
 Benchmarking was performed on three maps;	
