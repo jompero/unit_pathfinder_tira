@@ -1,8 +1,8 @@
 language: java
 jdk:
-- oraclejdk8
+  - oraclejdk8
 script:
   - cd unit_pathfinder_tira
   - ./gradlew jacocoTestReport
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -X gcov
+  - ./gradlew jacocoTestReport coveralls
