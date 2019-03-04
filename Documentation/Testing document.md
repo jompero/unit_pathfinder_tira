@@ -27,12 +27,6 @@ Lastly, Baldur's Gate is not showing much difference between Maze. A* is slightl
 Main package and thus nothing testable.
 ### gui
 Done manually. Not sure if I can generate Unit Tests for this package.
-
-package | coverage  
----- | ----
-gui						| 0.0%  
-pathfinder				| 93.3%  
-graph					| 97.2%  
-mycollections			| 98.9%  
-unit_pathfinder_tira		| 0.0%  
-Total					| 60.4%  
+### Coverage report
+For coverage report, please refer to 
+[my coveralls.](https://coveralls.io/repos/github/jompero/unit_pathfinder_tira/badge.svg?branch=master)
