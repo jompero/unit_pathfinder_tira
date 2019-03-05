@@ -26,3 +26,6 @@ Ticking the check boxes next to the pathfinder name will hide/unhide the drawn l
 New maps can be loaded by clicking 'Load New Map'. Maps used in testing are located in unit_pathfinder_tira/Maps/.  
   
 ![Image of program in running](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Resources/program.png)
+
+## Javadoc
+Javadoc can be found at: unit_pathfinder_tira/Documentation/Javadoc/index.html
