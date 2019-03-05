@@ -11,7 +11,7 @@ To run unit tests, use the following command instead:
 `$ ./gradlew test`
 
 ## Input
-Duskwood map is loaded by default. Search paths by clicking on the map. Previous end coordinates will be used as start coordinate and newly clicked coordinate will be the new end. Each pathfinders' path will be drawn on the map with brighter line being the path and lighter areas indicate the coordinate visited during the search. Use tools to hide layers for easier reading.
+Duskwood map is loaded by default. Search paths by clicking on the map. Previous end coordinates will be used as start coordinate and newly clicked coordinate will be the new end. Each pathfinders' path will be drawn on the map with brighter line being the path and lighter areas indicate the coordinate visited during the search. Use tools to hide layers for easier reading. Note that for longer paths the program may become unresponsive for a few seconds as it will usually wait for Dijkstra to finish calculations.
 
 ## Tools
 Benchmarking information is found on the right side. The info is updated after each pathfinder has returned their paths. The data can be copied to clipboard by clicking 'Copy'. The copied format allows convenient pasting to a table (Excel for example).  
