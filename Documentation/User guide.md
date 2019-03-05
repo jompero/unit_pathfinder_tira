@@ -1,10 +1,10 @@
 # User guide
 
 ## Launch
-Jar location: unit_pathfinder_tira/JAR/unit_pathfinder_tira.jar
 Launch jar to start the program.  
+Jar location: unit_pathfinder_tira/Jar/unit_pathfinder_tira.jar  
   
-Alternatively, one can use command line tool to rune the following command under unit_pathfinder_tira/unit_pathfinder_tira:  
+Alternatively, one can use command line tool to run the following command under unit_pathfinder_tira/unit_pathfinder_tira:  
 `$ ./gradlew run`
   
 To run unit tests, use the following command instead:  
