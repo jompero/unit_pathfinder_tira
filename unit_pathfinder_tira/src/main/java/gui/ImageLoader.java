@@ -7,10 +7,20 @@ import javafx.stage.*;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.image.*;
 
+/**
+ * A tool that triggers a native pop-up to allow image loading from file system.
+ * @author danijompero
+ *
+ */
 public class ImageLoader {
 
 	Desktop desktop = Desktop.getDesktop();
 
+	/**
+	 * Triggers the native pop-up to select an image file type.
+	 * @param stage
+	 * @return
+	 */
 	public static Image trigger(Stage stage) {
 		Image img = null;
 

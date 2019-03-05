@@ -7,6 +7,12 @@ import graph.Node;
 import mycollections.MyArrayList;
 import mycollections.MyPriorityQueue;
 
+/**
+ * JPS, or Jump-point search, is a shortest path algorithm that extends A*. 
+ * Similarly to A*, JPS will beam towards the target, however, instead of finding all possible shortest paths, it will prune them looking for only one.
+ * @author danijompero
+ *
+ */
 public class JPS extends Pathfinder {
 	double[][] visited;
 	boolean[][] checked;

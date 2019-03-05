@@ -2,6 +2,12 @@ package mycollections;
 
 import java.util.Iterator;
 
+/**
+ * MyArrayList is my implementation of ArrayList.
+ * @author danijompero
+ *
+ * @param <T>
+ */
 public class MyArrayList<T> extends MyCollection<T> implements Iterable<T>{
 
 	@Override

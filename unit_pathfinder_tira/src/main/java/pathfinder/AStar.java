@@ -7,6 +7,13 @@ import graph.Node;
 import mycollections.MyArrayList;
 import mycollections.MyPriorityQueue;
 
+/**
+ * A* is a shortest path algorithm that extends Dijkstra's with heuristic values. 
+ * It's aim is to beam towards the target with a heuristic function, however doing so 
+ * it may occasionally trade optimal path for speed.
+ * @author danijompero
+ *
+ */
 public class AStar extends Pathfinder {
 	/**
 	 * A* shortest path search algorithm.

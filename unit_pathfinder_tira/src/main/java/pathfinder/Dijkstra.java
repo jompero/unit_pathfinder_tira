@@ -7,6 +7,12 @@ import graph.Node;
 import mycollections.MyArrayList;
 import mycollections.MyPriorityQueue;
 
+/**
+ * Dijkstra is a greedy shortest path algorithm that expands to all frontiers in order shortest path so far. 
+ * Essentially it is a breadth first that sorts visited Nodes with a PriorityQueue.
+ * @author danijompero
+ *
+ */
 public class Dijkstra extends Pathfinder {
 	boolean[][] visited;
 	

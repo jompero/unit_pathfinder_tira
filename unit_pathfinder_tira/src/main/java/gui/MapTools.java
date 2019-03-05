@@ -6,7 +6,6 @@ import javafx.scene.*;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.nio.file.attribute.PosixFilePermission;
 import java.util.Arrays;
 
 import javafx.geometry.Insets;
@@ -19,6 +18,11 @@ import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
+/**
+ * MapTools is a GUI scene that provides benchmarking data and allows loading of maps.
+ * @author danijompero
+ *
+ */
 public class MapTools extends VBox {
 	MapView mv;
 	
@@ -219,6 +223,9 @@ public class MapTools extends VBox {
 		return fields;
 	}
 	
+	/**
+	 * Copies the benchmarking data to clipboard in a format that can be pasted to a table.
+	 */
 	void copyToClipboard() {
 		String data = "";
 		data += String.format("Coordinates\t%s\t%s\n", Arrays.toString(mv.getStart()),Arrays.toString(mv.getEnd()));

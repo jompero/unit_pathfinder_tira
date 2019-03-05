@@ -1,7 +1,7 @@
 package mycollections;
 
 /**
- * My implementation of a PriorityQueue. It uses a binary tree to sort items on addition and removal.
+ * MyPriorityQueue is my implementation of a PriorityQueue. It uses a binary tree to sort items on addition and removal.
  * @author danijompero
  *
  * @param <T>

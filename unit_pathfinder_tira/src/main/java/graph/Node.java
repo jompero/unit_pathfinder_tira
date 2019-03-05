@@ -2,7 +2,11 @@ package graph;
 
 import mycollections.MyArrayList;
 
-// A node is an expert coordinate which knows its parent and can hold a weight value
+/**
+ * A node is an expert coordinate which knows its parent and can hold a weight value.
+ * @author danijompero
+ *
+ */
 public class Node implements Comparable<Node> {
 	final int[] xy;
 	double weight;
@@ -25,6 +29,10 @@ public class Node implements Comparable<Node> {
 		return weight;
 	}
 	
+	/**
+	 * Recursively go through parents and return the path to the Node with no parents.
+	 * @return	Path to the Node with no parent in reverse order.
+	 */
 	public MyArrayList<int[]> path() {
 		MyArrayList<int[]> path = new MyArrayList<>();
 		if (parent != null) {

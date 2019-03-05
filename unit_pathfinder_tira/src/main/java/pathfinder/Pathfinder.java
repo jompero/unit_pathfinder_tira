@@ -5,6 +5,11 @@ import java.util.Arrays;
 import graph.Graph;
 import mycollections.MyArrayList;
 
+/**
+ * Pathdinder is an abstract class that provides a skeleton for all implemented pathfinding algorithms.
+ * @author danijompero
+ *
+ */
 public abstract class Pathfinder {
 	// Benchmarking data
 	double totalWeight = 0;

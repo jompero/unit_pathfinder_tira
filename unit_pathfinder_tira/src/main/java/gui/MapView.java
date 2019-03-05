@@ -13,6 +13,11 @@ import graph.Graph;
 
 import pathfinder.*;
 
+/**
+ * MapView is a GUI scene that displays a loaded map. Only inputs are clicking of coordinates and loading of maps.
+ * @author danijompero
+ *
+ */
 public class MapView extends StackPane {
 	Graph g;
 	
@@ -153,6 +158,10 @@ public class MapView extends StackPane {
 		return stats;
 	}
 
+	/**
+	 * Resets the scene with a new map.
+	 * @param img
+	 */
 	public void loadMap(Image img) {
 		if (img != null) {
 			// Set the map image as background
