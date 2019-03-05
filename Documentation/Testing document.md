@@ -26,7 +26,7 @@ Lastly, Baldur's Gate is not showing much difference between Maze. A* is slightl
 ### Coverage report
 For coverage report, please refer to 
 [my coveralls.](https://coveralls.io/repos/github/jompero/unit_pathfinder_tira/badge.svg?branch=master)
-## Ignored
+### Ignored
 #### unit_pathfinder_tira
 Main package and thus nothing testable.
 #### gui
