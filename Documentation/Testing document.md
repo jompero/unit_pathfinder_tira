@@ -23,10 +23,11 @@ On Maze on the other hand, JPS is the clear winner. It is able to find interesti
 Lastly, Baldur's Gate is not showing much difference between Maze. A* is slightly faster as less walls are in the way. Most  notable difference is to JPS, however. As Baldur's Gate has more details in favor of complexity, JPS latches on to many spots it considers interesting. While so, it does not seem to slow the algorithm down by a great deal.
 
 ## Unit Tests
-### unit_pathfinder_tira
-Main package and thus nothing testable.
-### gui
-Done manually. Not sure if I can generate Unit Tests for this package.
 ### Coverage report
 For coverage report, please refer to 
 [my coveralls.](https://coveralls.io/repos/github/jompero/unit_pathfinder_tira/badge.svg?branch=master)
+## Ignored
+#### unit_pathfinder_tira
+Main package and thus nothing testable.
+#### gui
+Done manually. Not sure if I can generate Unit Tests for this package.
