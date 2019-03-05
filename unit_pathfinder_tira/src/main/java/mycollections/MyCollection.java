@@ -4,7 +4,7 @@ package mycollections;
  * MyCollection is my implementation of an abstract collection that will be extended for a priority queue and an array list.
  * @author danijompero
  *
- * @param <T>
+ * @param <T>	The type the list will be filled with.
  */
 abstract public class MyCollection<T> {
 	protected Object[] list = new Object[10];;

@@ -6,7 +6,7 @@ import java.util.Iterator;
  * MyArrayList is my implementation of ArrayList.
  * @author danijompero
  *
- * @param <T>
+ * @param <T>	The type the list will be filled with.
  */
 public class MyArrayList<T> extends MyCollection<T> implements Iterable<T>{
 

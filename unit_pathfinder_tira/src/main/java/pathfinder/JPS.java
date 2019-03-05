@@ -20,13 +20,10 @@ public class JPS extends Pathfinder {
 	/**
 	 * Jump-point search (JPS) shortest path search algorithm. Not fully implemented yet.
 	 * 
-	 * @param g
-	 *            Graph from which path is searched from
-	 * @param start
-	 *            The starting point
-	 * @param end
-	 *            The ending point
-	 * @return
+	 * @param g			Graph from which path is searched from
+	 * @param start		The starting point
+	 * @param end		The ending point
+	 * @return			The shortest path
 	 */
 	public MyArrayList<int[]> search(Graph g, int[] start, int[] end) {
 		// Log start time
@@ -92,7 +89,7 @@ public class JPS extends Pathfinder {
 	 * @param g 		Graph
 	 * @param start 	Starting Node
 	 * @param end 		Ending coordinate
-	 * @return Successors (or "interesting" Nodes) to the starting node
+	 * @return 			Successors (or "interesting" Nodes) to the starting node
 	 */
 	private MyArrayList<Node> successors(Graph g, Node start, int[] end) {
 		MyArrayList<Node> successors = new MyArrayList<>();
@@ -106,9 +103,11 @@ public class JPS extends Pathfinder {
 	}
 
 	/**
-	 * Returns the viable neighbors JPS can jump towards.
-	 * @param neighbors
-	 * @return
+	 * Returns the pruned neighbors. 
+	 * Neighbors that can be reached as fast or faster are ignored.
+	 * @param g			Graph
+	 * @param start		Starting Node
+	 * @return			Pruned neighbors
 	 */
 	private MyArrayList<int[]> prune(Graph g, Node start) {				
 		MyArrayList<int[]> neighbors = new MyArrayList<>();
@@ -203,7 +202,7 @@ public class JPS extends Pathfinder {
 	 * @param start 	Starting Node
 	 * @param towards 	Coordinate towards which the method will move.
 	 * @param g 		Graph
-	 * @return Successor Node 
+	 * @return 			Successor Node 
 	 */
 	private Node jump(Node start, int[] towards, int[] end, Graph g) {
 		// Determine dir based on 'start -> towards' 
@@ -255,11 +254,11 @@ public class JPS extends Pathfinder {
 	
 	/**
 	 * Creates a new starting for a new jump. As the same Node is used in many places, 
-	 * this could have been run once early but sometimes is not needed so it is created as late as possible.
+	 * trying to run as late as possible.
 	 * @param start		Jump origin
 	 * @param towards	Coordinate to be checked
 	 * @param end		The goal
-	 * @return
+	 * @return			New Node with start as parent, and a heuristic weight
 	 */
 	Node newStart(Node start, int[] towards, int[] end) {
 		int[] startXY = start.getXY();

@@ -51,7 +51,7 @@ public class MapView extends StackPane {
 	 * Handler for a mouse click.
 	 * On click, queue the coordinate and run pathfinders if 2 valid coordinates have
 	 * been clicked in a row.
-	 * @param event
+	 * @param event		Mouse click on the map
 	 */
 	void handeMouseClick(MouseEvent event) {
 		if (isSceneLocked) return; // Not sure if this is needed but will prevent clicking elsewhere before paths are calculated
@@ -85,11 +85,11 @@ public class MapView extends StackPane {
 	
 	/**
 	 * Make previous click the starting point and new click the ending point
-	 * @param start
-	 * @param end
-	 * @param x
-	 * @param y
-	 * @return
+	 * @param start	Current start coordinate
+	 * @param end	Current end coordinate
+	 * @param x		New X coordinate
+	 * @param y		New Y cooridinate
+	 * @return		Return true if two coordinates have been clicked
 	 */
 	boolean inputQueue(int[] start, int[] end, int x, int y) {
 		start[0] = end[0];
@@ -103,8 +103,8 @@ public class MapView extends StackPane {
 	
 	/**
 	 * Take the visited list from Pathfinder and draw visited coordinates white
-	 * @param gc
-	 * @param pixels
+	 * @param gc		GraphicsContext of the layer
+	 * @param pixels	Coordinates of pixels that should be highlighted
 	 */
 	void highlightVisited(GraphicsContext gc, MyArrayList<int[]> pixels) {
 		gc.setStroke(Color.AQUA);
@@ -123,9 +123,9 @@ public class MapView extends StackPane {
 	
 	/**
 	 * Take the result from Pathfinder and draw a specified color line to indicate the path
-	 * @param gc
-	 * @param pixels
-	 * @param color
+	 * @param gc		GraphicsContext of the layer
+	 * @param pixels	Coordinates of pixels that should be highlighted
+	 * @param color		Color in which the path should be drawn in
 	 */
 	void highlightPath(GraphicsContext gc, MyArrayList<int[]> pixels, Color color) {
 		gc.setStroke(color);
@@ -160,7 +160,7 @@ public class MapView extends StackPane {
 
 	/**
 	 * Resets the scene with a new map.
-	 * @param img
+	 * @param img	New map image
 	 */
 	public void loadMap(Image img) {
 		if (img != null) {

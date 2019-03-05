@@ -3,6 +3,7 @@ package graph;
 import javafx.scene.image.*;
 
 /**
+ * BitmapToMatrix is a tool to convert images to integer matrixes based on the image grayscale values.
  * @author danijompero
  *
  */
@@ -13,8 +14,8 @@ public class BitmapToMatrix {
 	 * will check the greyscale value of each pixel and assign it to the coordinate.
 	 * Note that black will be 0 that will be considered out of bounds.
 	 * 
-	 * @param img
-	 * @return
+	 * @param map	Image to be converted
+	 * @return		Integer matrix where the value represents the grayscale value of the coordinate
 	 */
 	public static int[][] convert(Image map) {
 		int x = (int) map.getHeight();

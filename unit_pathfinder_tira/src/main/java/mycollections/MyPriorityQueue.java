@@ -4,7 +4,7 @@ package mycollections;
  * MyPriorityQueue is my implementation of a PriorityQueue. It uses a binary tree to sort items on addition and removal.
  * @author danijompero
  *
- * @param <T>
+ * @param <T>	The type the list will be filled with.
  */
 public class MyPriorityQueue<T extends Comparable<T>> extends MyCollection<T> {
 	int depth = 0;

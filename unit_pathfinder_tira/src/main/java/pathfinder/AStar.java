@@ -18,13 +18,10 @@ public class AStar extends Pathfinder {
 	/**
 	 * A* shortest path search algorithm.
 	 * 
-	 * @param g
-	 *            Graph from which path is searched from
-	 * @param start
-	 *            The starting point
-	 * @param end
-	 *            The ending point
-	 * @return
+	 * @param g			Graph from which path is searched from
+	 * @param start		The starting point
+	 * @param end		The ending point
+	 * @return			The path found (not always shortest)
 	 */
 	public MyArrayList<int[]> search(Graph g, int[] start, int[] end) {
 		// Log start time

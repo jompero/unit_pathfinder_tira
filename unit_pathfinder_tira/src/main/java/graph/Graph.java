@@ -32,7 +32,7 @@ public class Graph {
 	/**
 	 * Get the weight of a given coordinate.
 	 * @param v		Coordinate in int[] form were [0] is X and [1] is Y.
-	 * @return
+	 * @return		Weight of the given coordinate
 	 */
 	public int getWeight(int[] v) {
 		return getWeight(v[0], v[1]);
@@ -42,7 +42,7 @@ public class Graph {
 	 * Get the weight of a given coordinate.
 	 * @param x		X coordinate
 	 * @param y		Y coordinate
-	 * @return
+	 * @return		Weight of the given coordinate
 	 */
 	public int getWeight(int x, int y) {
 		if (x < 0 || x >= height || y < 0 || y >= width) return 0;
@@ -133,10 +133,10 @@ public class Graph {
 	
 	/**
 	 * Calculates the offset coordinate. Mainly implemented to improve readability of jump and prune methods.
-	 * @param origin
-	 * @param offsetX
-	 * @param offsetY
-	 * @return
+	 * @param origin	Coordinate from which to offset
+	 * @param offsetX	Offset value X
+	 * @param offsetY	Offset value Y
+	 * @return			Return offset coordinate
 	 */
 	public static int[] offset(int[] origin, int offsetX, int offsetY) {
 		int X = origin[0] + offsetX;

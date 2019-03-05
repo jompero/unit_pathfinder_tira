@@ -21,8 +21,8 @@ public class Dijkstra extends Pathfinder {
 	 * 
 	 * @param g 		Graph from which path is searched from
 	 * @param start 	The starting point
-	 * @param end 	The ending point
-	 * @return		Shortest path between start and end
+	 * @param end 		The ending point
+	 * @return			Shortest path between start and end
 	 */
 	public MyArrayList<int[]> search(Graph g, int[] start, int[] end) {
 		// Log start time

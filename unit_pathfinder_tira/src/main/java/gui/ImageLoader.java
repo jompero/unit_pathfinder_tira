@@ -18,8 +18,8 @@ public class ImageLoader {
 
 	/**
 	 * Triggers the native pop-up to select an image file type.
-	 * @param stage
-	 * @return
+	 * @param stage	Main stage
+	 * @return		Loaded image. Null if canceled.
 	 */
 	public static Image trigger(Stage stage) {
 		Image img = null;
