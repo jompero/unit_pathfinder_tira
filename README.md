@@ -1,5 +1,5 @@
 # unit_pathfinder_tira
-An Eclipse project set out to benchmark Dijkstra, A* and JPS in terms of finding a path for an in-game unit on a battlefield.
+A Java project set out to benchmark Dijkstra, A* and JPS in terms of finding a path for an in-game unit on a battlefield.
 
 ## Documentation
 * [Design document](https://github.com/jompero/unit_pathfinder_tira/blob/master/Documentation/Design%20document.md)
