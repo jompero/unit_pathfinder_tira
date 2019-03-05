@@ -51,6 +51,7 @@ public class Graph {
 	}
 
 	/**
+	 * Return neighbors of given coordinate. Walls will be ignored.
 	 * @param xy		Coordinates of node to be tested
 	 * @return 			Coordinates of neighboring nodes
 	 */
@@ -59,6 +60,7 @@ public class Graph {
 	}
 	
 	/**
+	 * Return neighbors of given coordinate. Walls will be ignored.
 	 * @param x 		X coordinate of node to be tested
 	 * @param y 		Y coordinate of node to be tested
 	 * @return			Coordinates of neighboring nodes
